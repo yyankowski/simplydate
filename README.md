@@ -1,2 +1,2 @@
 # simplidate
-A simple date-time manipulation library in Typescript.
+A simple functional date-time manipulation library implemented in Typescript.
