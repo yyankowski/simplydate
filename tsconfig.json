@@ -3,7 +3,9 @@
         "lib": [ "es2016", "dom"],
         "target": "es5",
         "module": "commonjs",
-        "outFile": "./simplidate.js",
-        "sourceMap": true
-    }
+        "sourceMap": false
+    },
+    "exclude": [
+        "index.spec.ts"
+    ]
 }

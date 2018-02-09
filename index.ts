@@ -1,4 +1,4 @@
-namespace Simply {
+export namespace Simply {
 
     export type SimplyDate = {
         year: number,
@@ -10,18 +10,20 @@ namespace Simply {
         millisecond: number
     }
 
+    export const toSimplyDate = (dt: Date) => ({
+        year: dt.getFullYear(),
+        month: dt.getMonth() + 1,
+        day: dt.getDate(),
+        hour: dt.getHours(),
+        minute: dt.getMinutes(),
+        second: dt.getSeconds(),
+        millisecond: dt.getMilliseconds()
+    })
+
     export const now = (): SimplyDate => {
         const now = new Date();
 
-        return {
-            year: now.getFullYear(),
-            month: now.getMonth(),
-            day: now.getDay(),
-            hour: now.getHours(),
-            minute: now.getMinutes(),
-            second: now.getSeconds(),
-            millisecond: now.getMilliseconds()
-        }
+        return toSimplyDate(now);
     };
 
     export const toDate = (sDt: SimplyDate): Date => {
@@ -32,14 +34,19 @@ namespace Simply {
 
     const incBy = (n1: number, n2: number) => n1 + n2; 
 
-    const decBy = (n1: number, n2: number) => n1 - n2;
+    const decBy = (n1: number, n2: number) => n2 - n1;
 
     /**
-     * Adds a value to the SimplyDate
-     * @param obj {month: 4}
+     * Used to set parts of a date.
+     * e.g { month: 4 }
+     */
+    type ActionParam =  SimplyDate;
+    /**
+     * 
+     * @param action 
      */
     const _to = (action: Function) => 
-        ({year, month, day, hour, minute, second, millisecond}: SimplyDate) => 
+        ({year, month, day, hour, minute, second, millisecond}: ActionParam) => 
         (sDt: SimplyDate): SimplyDate => 
         Object.assign({...sDt}, {
             year: year ? action(year, sDt.year) : sDt.year,
@@ -51,9 +58,10 @@ namespace Simply {
             millisecond : millisecond ? action(millisecond, sDt.millisecond) : sDt.millisecond
         });
 
+    type Preposition = "to" | "from";
     const _toInc = _to(incBy);
     const _toDec = _to(decBy);
-    const _transform = (preposition: string, action: (p: SimplyDate) => (p1: SimplyDate) => SimplyDate) => (value: number) => ({
+    const _transform = (preposition: Preposition, action: (p: SimplyDate) => (p1: SimplyDate) => SimplyDate) => (value: number) => ({
         years: () => ({
             [preposition]: action({year: value} as SimplyDate)
         }),
