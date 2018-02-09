@@ -1,0 +1,29 @@
+{
+  "name": "simplidate",
+  "version": "1.0.0",
+  "description": "Simple date-time manipulation.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc" : "./node_modules/typescript/bin/tsc",
+    "compile": "tsc" 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yyankowski/simplidate.git"
+  },
+  "keywords": [
+    "date",
+    "datetime",
+    "date-time"
+  ],
+  "author": "Yan Yankowski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yyankowski/simplidate/issues"
+  },
+  "homepage": "https://github.com/yyankowski/simplidate#readme",
+  "devDependencies": {
+    "typescript": "^2.7.1"
+  }
+}
