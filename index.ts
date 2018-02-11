@@ -27,69 +27,84 @@ export namespace Simply {
     };
 
     export const toDate = (sDt: SimplyDate): Date => {
-        if(!sDt) return null;
+        if (!sDt) return null;
 
         return new Date(sDt.year, sDt.month, sDt.day, sDt.hour, sDt.minute, sDt.second, sDt.millisecond);
     }
-
-    const incBy = (n1: number, n2: number) => n1 + n2; 
-
-    const decBy = (n1: number, n2: number) => n2 - n1;
-
-    /**
-     * Used to set parts of a date.
-     * e.g { month: 4 }
-     */
-    type ActionParam =  SimplyDate;
-    /**
-     * 
-     * @param action 
-     */
-    const _to = (action: Function) => 
-        ({year, month, day, hour, minute, second, millisecond}: ActionParam) => 
-        (sDt: SimplyDate): SimplyDate => 
-        Object.assign({...sDt}, {
-            year: year ? action(year, sDt.year) : sDt.year,
-            month: month ? action(month, sDt.month) : sDt.month,
-            day: day ? action(day, sDt.day) : sDt.day,
-            hour: hour ? action(hour, sDt.hour) : sDt.hour,
-            minute : minute ? action(minute, sDt.minute) : sDt.minute,
-            second : second ? action(second, sDt.second) : sDt.second,
-            millisecond : millisecond ? action(millisecond, sDt.millisecond) : sDt.millisecond
-        });
-
-    type Preposition = "to" | "from";
-    const _toInc = _to(incBy);
-    const _toDec = _to(decBy);
-    const _transform = (preposition: Preposition, action: (p: SimplyDate) => (p1: SimplyDate) => SimplyDate) => (value: number) => ({
-        years: () => ({
-            [preposition]: action({year: value} as SimplyDate)
-        }),
-        months: () => ({
-            [preposition]: action({month: value} as SimplyDate)
-        }),
-        days: () => ({
-            [preposition]: action({day: value} as SimplyDate)
-        }),
-        hours: () => ({
-            [preposition]: action({hour: value} as SimplyDate)
-        }),
-        minutes: () => ({
-            [preposition]: action({minute: value} as SimplyDate)
-        }),
-        seconds: () => ({
-            [preposition]: action({second: value} as SimplyDate)
-        }),
-        milliseconds: () => ({
-            [preposition]: action({millisecond: value} as SimplyDate)
-        })
-    })
 
     /**
      * Add 
      * @param value 
      */
-    export const add =  _transform("to", _toInc);
-    export const subtract = _transform("from", _toDec);
+    // export const add =  _transform("to", _toInc);
+    // export const subtract = _transform("from", _toDec);
+    const _addYears = (value: number) => (sDt: SimplyDate) => Object.assign({
+        ...sDt
+    }, { year: sDt.year + value });
+
+
+    // when month value overflows 12, the year should be incremented
+    const _increaseYearIfNeeded = ({ year, month }: SimplyDate, value: number): number => {
+        return year + (~~((month + value) / 12));
+    }
+
+    const _addMonths = (value: number) => (sDt: SimplyDate) => {
+        const sumOfMonths = sDt.month + value;
+        const mod = (sDt.month + value) % 12;
+
+        if(sumOfMonths <= 12) 
+            return Object.assign({...sDt}, { month: sumOfMonths});
+
+        const yearsToAdd = (sumOfMonths % 12) === 0 ? (sumOfMonths / 12) - 1 :  ~~(sumOfMonths / 12);
+
+        return Object.assign({...sDt}, {
+                year: _addYears(yearsToAdd)(sDt).year,
+                month: mod === 0 ? 12 : mod
+            });
+    }
+
+    const _addDays = (value: number) => (sDt: SimplyDate) => Object.assign({
+        ...sDt
+    }, { day: ((sDt.day + value) % new Date(2000 + (sDt.year % 2000), sDt.month - 1, 0).getDate()) });
+
+    const _addHours = (value: number) => (sDt: SimplyDate) => Object.assign({
+        ...sDt
+    }, { hour: (sDt.hour + value) % 24 });
+
+    const _addMinutes = (value: number) => (sDt: SimplyDate) => Object.assign({
+        ...sDt
+    }, { hour: (sDt.hour + value) % 24 });
+
+    const _addSeconds = (value: number) => (sDt: SimplyDate) => Object.assign({
+        ...sDt
+    }, { hour: (sDt.hour + value) % 24 });
+
+    const _addMilliseconds = (value: number) => (sDt: SimplyDate) => Object.assign({
+        ...sDt
+    }, { hour: (sDt.hour + value) % 24 });
+
+    export const add = (value: number) => ({
+        years: {
+            to: _addYears(value)
+        },
+        months: {
+            to: _addMonths(value)
+        },
+        days: () => ({
+            to: _addMonths(value)
+        }),
+        hours: () => ({
+            to: _addHours(value)
+        }),
+        minutes: () => ({
+            to: _addMinutes(value)
+        }),
+        seconds: () => ({
+            to: _addSeconds(value)
+        }),
+        milliseconds: () => ({
+            to: _addMilliseconds(value)
+        })
+    })
 
 }
