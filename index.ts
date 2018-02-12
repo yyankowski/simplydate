@@ -32,6 +32,9 @@ export namespace Simply {
         return new Date(sDt.year, sDt.month, sDt.day, sDt.hour, sDt.minute, sDt.second, sDt.millisecond);
     }
 
+    const _getNumberOfDaysInMonth = (year: number, month: number) => 
+        new Date(2000 + (year % 2000), month - 1, 0).getDate();
+
     /**
      * Add 
      * @param value 
@@ -51,6 +54,7 @@ export namespace Simply {
     const _addMonths = (value: number) => (sDt: SimplyDate) => {
         const sumOfMonths = sDt.month + value;
         const mod = (sDt.month + value) % 12;
+        // const totalDaysInMonth = _getNumberOfDaysInMonth()
 
         if(sumOfMonths <= 12) 
             return Object.assign({...sDt}, { month: sumOfMonths});
@@ -65,7 +69,7 @@ export namespace Simply {
 
     const _addDays = (value: number) => (sDt: SimplyDate) => Object.assign({
         ...sDt
-    }, { day: ((sDt.day + value) % new Date(2000 + (sDt.year % 2000), sDt.month - 1, 0).getDate()) });
+    }, { day: ((sDt.day + value) % _getNumberOfDaysInMonth(sDt.year, sDt.month)) });
 
     const _addHours = (value: number) => (sDt: SimplyDate) => Object.assign({
         ...sDt
