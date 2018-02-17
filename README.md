@@ -4,7 +4,7 @@ A simple functional date-time manipulation library implemented in Typescript.
 Usage:
 
 ```
-const simpleDate = Simply.toSimplyDate(new Date(`2015-02-29T03:24:00`));
+const simpleDate = Simply.from(new Date(`2015-02-29T03:24:00`));
 
 ```
 ```

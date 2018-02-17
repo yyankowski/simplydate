@@ -8,6 +8,7 @@
     "compile": "npm run _tsc",
     "test": "mocha -r ts-node/register index.spec.ts"
   },
+  "types": "index.ts", 
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yyankowski/simplidate.git"
@@ -24,11 +25,11 @@
   },
   "homepage": "https://github.com/yyankowski/simplidate#readme",
   "devDependencies": {
-    "@types/chai": "^4.1.2",
-    "@types/mocha": "^2.2.48",
-    "chai": "^4.1.2",
+    "@types/chai": "4.1.2",
+    "@types/mocha": "2.2.48",
+    "chai": "4.1.2",
     "mocha": "5.0.0",
-    "ts-node": "^4.1.0",
+    "ts-node": "4.1.0",
     "typescript": "2.7.1"
   }
 }
