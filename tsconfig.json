@@ -6,6 +6,6 @@
         "sourceMap": false
     },
     "exclude": [
-        "index.spec.ts"
+        "./test"
     ]
 }

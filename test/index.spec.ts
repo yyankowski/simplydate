@@ -1,5 +1,8 @@
 import { expect } from "chai";
-import { Simply } from "./index";
+import { Simply } from "../src/index";
+import './parsing.spec';
+import './minutes.spec';
+import './seconds.spec';
 
 describe("SimplyDate library unit-tests", () => {
     let sDt: Simply.SimplyDate;
@@ -147,14 +150,10 @@ describe("SimplyDate library unit-tests", () => {
             });
         });
 
-        describe("3.5 minutes subtraction ", () => {
-            it("3.5.1 correctly subtract minutes", () => {
-                sDt = Simply.from(new Date(`2017-03-01T03:24:00`));
-                expect(Simply.subtract(24).minutes.from(sDt).hour).to.equal(3);
-                expect(Simply.subtract(24).minutes.from(sDt).minute).to.equal(0);
-            });
-        });
+        
 
 
     });
+
+    
 });

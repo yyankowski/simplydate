@@ -28,10 +28,29 @@ export namespace Simply {
         return year % 4 === 0;
     };
 
+    const dateTimeStringFromPattern = {
+        "MM-DD-YYYY" : (dt: string): SimplyDate =>  {
+            const data = dt.split("-");
+            return {
+                year: Number.parseInt(data[2]),
+                month: Number.parseInt(data[0]),
+                day: Number.parseInt(data[1]),
+                hour: 0,
+                minute: 0,
+                second: 0,
+                millisecond: 0
+            }
+        } 
+    }
     /**
      * @param dt a string of type 2015-02-29T03:24:00
      */
-    export const fromString = (dt: string): SimplyDate => from(new Date(dt));
+    export const fromString = (dt: string, pattern?: string): SimplyDate => {
+        if(pattern) {
+            return dateTimeStringFromPattern[pattern](dt);
+        }
+        return from(new Date(dt));
+    }
 
     /**
      * From Unix epoch
@@ -74,10 +93,10 @@ export namespace Simply {
     }, { year: sDt.year + value });
 
     // when a month has 30 days, but we have 31 according to the result
-    const overflowDays = (month: number, day: number) => {
-        if (month === 1) return 0;
-        if (month === 2) return;
-    }
+    // const overflowDays = (month: number, day: number) => {
+    //     if (month === 1) return 0;
+    //     if (month === 2) return;
+    // }
 
     const _addMonths = (value: number) => (sDt: SimplyDate): SimplyDate => {
         const sumOfMonths = sDt.month + value;
@@ -141,7 +160,6 @@ export namespace Simply {
     const _subtractYears = (value: number) => (sDt: SimplyDate): SimplyDate => Object.assign({
         ...sDt
     }, { year: sDt.year - value });
-
 
     const deterimineLastDayOfMonth = (year: number, month: number, day: number): number => {
         if (month === 2 && day > 28) {
@@ -231,6 +249,21 @@ export namespace Simply {
         return Object.assign({ ...sDt }, { year, month, day, hour, minute });
     };
 
+    const _subtractSeconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
+        let { second } = sDt;
+        const subtractOneMinute = _subtractMinutes(1);
+        while(value--){
+            second--;
+            if(second === -1){
+                second = 59;
+                sDt = subtractOneMinute(sDt);
+            }
+        }
+
+        let {minute, hour, day, month, year} = sDt;
+        return Object.assign({ ...sDt }, { year, month, day, hour, minute, second });
+    };
+
     export const subtract = (value: number) => ({
         years: {
             from: _subtractYears(value)
@@ -248,7 +281,7 @@ export namespace Simply {
             from: _subtractMinutes(value)
         },
         seconds: {
-            from: _addSeconds(value)
+            from: _subtractSeconds(value)
         },
         milliseconds:{
             from: _addMilliseconds(value)
