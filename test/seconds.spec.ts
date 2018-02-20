@@ -11,12 +11,16 @@ describe("seconds.spec.ts seconds manipulation logic should ", () => {
             expect(sDt.second).to.equal(0);
         });
 
-        it("1. correctly subtract seconds ", () => {
+        it("1.2 correctly subtract seconds ", () => {
            expect(Simply.subtract(1).seconds.from(sDt).second).to.equal(59);
         });
     
-        it("2. correctly subtract seconds ", () => {
+        it("1.3 correctly subtract seconds ", () => {
             expect(Simply.subtract(1).seconds.from(sDt).day).to.equal(24);
+        });
+
+        xit("1.4 correctly subtract seconds ", () => {
+            expect(Simply.subtract(-1).seconds.from(sDt).second).to.equal(24);
         });
     });
 });
