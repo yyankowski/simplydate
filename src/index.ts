@@ -1,4 +1,3 @@
-import { getTotalNumberOfDaysInMonth, deterimineLastDayOfMonth } from "./utilities";
 import { SimplyDate } from "./models";
 import { addYears, addMonths, addDays, addHours, addMinutes, addSeconds, addMilliseconds } from "./addition";
 import { subtractYears, subtractMonths, subtractDays, subtractHours, subtractMinutes, subtractSeconds, subtractMilliseconds } from "./subtraction";
@@ -28,16 +27,20 @@ export namespace Simply {
                 millisecond: 0
             }
         }
-    }
+    };
+
     /**
-     * @param dt a string of type 2015-02-29T03:24:00
+     *
+     * @param {string} dt a string of type 2015-02-29T03:24:00
+     * @param {string} pattern
+     * @returns {SimplyDate}
      */
     export const fromString = (dt: string, pattern?: string): SimplyDate => {
         if (pattern) {
             return dateTimeStringFromPattern[pattern](dt);
         }
         return from(new Date(dt));
-    }
+    };
 
     /**
      * From Unix epoch
@@ -59,7 +62,7 @@ export namespace Simply {
         if (!sDt) return null;
 
         return new Date(sDt.year, sDt.month, sDt.day, sDt.hour, sDt.minute, sDt.second, sDt.millisecond);
-    }
+    };
 
     export const add = (value: number) => ({
         years: {
