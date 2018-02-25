@@ -1,8 +1,9 @@
 import { expect } from "chai";
 import { Simply } from "../src/index";
+import { SimplyDate } from "../src/models";
 
 describe("days.spec.ts ", () => {
-    let sDt: Simply.SimplyDate;
+    let sDt: SimplyDate;
 
     describe("1.0 subtraction test cases ", () => {
         it("1.1 correctly subtract a day of a regular month", () => {

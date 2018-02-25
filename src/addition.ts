@@ -60,7 +60,7 @@ import { getTotalNumberOfDaysInMonth } from "./utilities";
             hour = sum;
         }
         else{
-            let addOneDay = addDays(1);
+            const addOneDay = addDays(1);
             while(value--){
                 hour++;
                 if(hour === 24){
@@ -75,14 +75,49 @@ import { getTotalNumberOfDaysInMonth } from "./utilities";
         return Object.assign({ ...sDt }, { year, month, day, hour });
     };
 
-    const _addMinutes = (value: number) => (sDt: SimplyDate): SimplyDate => Object.assign({
-        ...sDt
-    }, { hour: (sDt.hour + value) % 24 });
+    export const addMinutes = (value: number) => (sDt: SimplyDate): SimplyDate => {
+        let {minute} = sDt;
+        const sum = minute + value;
+        if(sum < 60){
+            minute = sum;
+        }
+        else{
+            const addOneHour = addHours(1);
+            while(value--){
+                minute++;
+                if(minute === 60){
+                    minute = 0;
+                    sDt = addOneHour(sDt);
+                }
+            }
+        }
 
-    const _addSeconds = (value: number) => (sDt: SimplyDate): SimplyDate => Object.assign({
-        ...sDt
-    }, { hour: (sDt.hour + value) % 24 });
+        const {year, month, day, hour} = sDt;
+        return Object.assign({ ...sDt }, { year, month, day, hour, minute });
+    };
 
-    const _addMilliseconds = (value: number) => (sDt: SimplyDate): SimplyDate => Object.assign({
+    export const addSeconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
+        let {second} = sDt;
+        const sum = value + second;
+
+        if(sum < 60){
+            second = sum;
+        }
+        else{
+            const addOneMinute = addMinutes(1);
+            while(value--){
+                second++;
+                if(second === 60){
+                    second = 0;
+                    sDt = addOneMinute(sDt);
+                }
+            }
+        }
+
+        const {year, month, day, hour, minute} = sDt;
+        return Object.assign({ ...sDt }, { year, month, day, hour, minute, second });
+    };
+
+    export const addMilliseconds = (value: number) => (sDt: SimplyDate): SimplyDate => Object.assign({
         ...sDt
     }, { hour: (sDt.hour + value) % 24 });

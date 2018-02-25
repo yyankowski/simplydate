@@ -1,8 +1,10 @@
 import { expect } from "chai";
 import { Simply } from "../src/index";
+import { isLeapYear } from "../src/utilities";
+import { SimplyDate } from "../src/models";
 
 describe("3.2 month subtraction logic should", () => {
-    let sDt: Simply.SimplyDate;
+    let sDt: SimplyDate;
 
     it("3.2.1 correctly subtract month", () => {
         sDt = Simply.from(new Date(`2017-04-29T03:24:00`));
@@ -21,7 +23,7 @@ describe("3.2 month subtraction logic should", () => {
     });
 
     it("3.2.4 correctly identify a leap year", () => {
-        expect(Simply.isLeapYear(2016)).to.be.true;   
+        expect(isLeapYear(2016)).to.be.true;   
     });
 
     it("3.2.5 correctly subtract month of a regular year", () => {

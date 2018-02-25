@@ -6,9 +6,10 @@ import './seconds.spec';
 import './years.spec';
 import './days.spec';
 import './hours.spec';
+import { SimplyDate } from "../src/models";
 
 describe("SimplyDate library unit-tests", () => {
-    let sDt: Simply.SimplyDate;
+    let sDt: SimplyDate;
 
     describe("1.0 simple use cases should", () => {
         const YEAR = 1995;

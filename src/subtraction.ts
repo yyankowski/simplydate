@@ -73,7 +73,7 @@ export const subtractHours = (value: number) => (sDt: SimplyDate): SimplyDate =>
         hour = diff;
     }
     else {
-        const subtractOneDay = _subtractDays(1);
+        const subtractOneDay = subtractDays(1);
         while (value--) {
             hour--;
             if (hour === -1) {
@@ -92,7 +92,7 @@ export const subtractHours = (value: number) => (sDt: SimplyDate): SimplyDate =>
 
 export const subtractMinutes = (value: number) => (sDt: SimplyDate): SimplyDate => {
     let minute = sDt.minute;
-    const subtractOneHour = _subtractHours(1);
+    const subtractOneHour = subtractHours(1);
     while (value--) {
         minute--;
         if (minute === -1) {
@@ -111,7 +111,7 @@ export const subtractMinutes = (value: number) => (sDt: SimplyDate): SimplyDate 
 
 export const subtractSeconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
     let { second } = sDt;
-    const subtractOneMinute = _subtractMinutes(1);
+    const subtractOneMinute = subtractMinutes(1);
     while (value--) {
         second--;
         if (second === -1) {

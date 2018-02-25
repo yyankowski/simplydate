@@ -1,6 +1,7 @@
 import { getTotalNumberOfDaysInMonth, deterimineLastDayOfMonth } from "./utilities";
 import { SimplyDate } from "./models";
-import { addYears, addMonths, addDays } from "./addition";
+import { addYears, addMonths, addDays, addHours, addMinutes, addSeconds, addMilliseconds } from "./addition";
+import { subtractYears, subtractMonths, subtractDays, subtractHours, subtractMinutes, subtractSeconds } from "./subtraction";
 
 export namespace Simply {
 
@@ -84,153 +85,37 @@ export namespace Simply {
         }
     });
 
-    const _subtractYears = (value: number) => (sDt: SimplyDate): SimplyDate => Object.assign({
-        ...sDt
-    }, { year: sDt.year - value });
+    
+
+    
 
     
 
     
 
-    const _subtractMonths = (value: number) => (sDt: SimplyDate): SimplyDate => {
-        if (value < 0) return _addMonths(-value)(sDt);
-
-        const diff = sDt.month - value;
-
-        let year = sDt.year;
-        let month = sDt.month;
-        let day = sDt.day;
-        // if we are still in the same year
-        if (diff > 0) {
-            month = diff;
-        }
-        else {
-            while (value--) {
-                month--;
-                if (month === 0) {
-                    month = 12;
-                    year--;
-                }
-            }
-
-            day = deterimineLastDayOfMonth(year, month, day);
-        }
-
-        return Object.assign({ ...sDt }, { year, month, day });
-    }
-
-    const _subtractDays = (value: number) => (sDt: SimplyDate): SimplyDate => {
-        let year = sDt.year;
-        let month = sDt.month;
-        let day = sDt.day;
-
-        const diff = day - value;
-
-        // if we are still in the same month
-        if (diff > 0) {
-            day = diff;
-        }
-        else {
-            while (value--) {
-                day--;
-                if (day === 0) {
-                    day = 31;
-                    month--;
-                    if (month === 0) {
-                        month = 12;
-                        year--
-                    }
-
-                    day = deterimineLastDayOfMonth(year, month, day);
-                }
-            }
-        }
-
-        return Object.assign({ ...sDt }, { year, month, day });
-    };
-
-    const _subtractHours = (value: number) => (sDt: SimplyDate): SimplyDate => {
-
-        let hour = sDt.hour;
-        const diff = hour - value;
-
-        // if we are still in the same day
-        if (diff > -1) {
-            hour = diff;
-        }
-        else {
-            const subtractOneDay = _subtractDays(1);
-            while (value--) {
-                hour--;
-                if (hour === -1) {
-                    hour = 23;
-                    sDt = subtractOneDay(sDt);
-                }
-            }
-        }
-
-        let year = sDt.year;
-        let month = sDt.month;
-        let day = sDt.day;
-
-        return Object.assign({ ...sDt }, { year, month, day, hour });
-    }
-
-    const _subtractMinutes = (value: number) => (sDt: SimplyDate): SimplyDate => {
-        let minute = sDt.minute;
-        const subtractOneHour = _subtractHours(1);
-        while (value--) {
-            minute--;
-            if (minute === -1) {
-                minute = 59;
-                sDt = subtractOneHour(sDt)
-            }
-        }
-
-        let year = sDt.year;
-        let month = sDt.month;
-        let day = sDt.day;
-        let hour = sDt.hour;
-
-        return Object.assign({ ...sDt }, { year, month, day, hour, minute });
-    };
-
-    const _subtractSeconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
-        let { second } = sDt;
-        const subtractOneMinute = _subtractMinutes(1);
-        while (value--) {
-            second--;
-            if (second === -1) {
-                second = 59;
-                sDt = subtractOneMinute(sDt);
-            }
-        }
-
-        let { minute, hour, day, month, year } = sDt;
-        return Object.assign({ ...sDt }, { year, month, day, hour, minute, second });
-    };
+    
 
     export const subtract = (value: number) => ({
         years: {
-            from: _subtractYears(value)
+            from: subtractYears(value)
         },
         months: {
-            from: _subtractMonths(value)
+            from: subtractMonths(value)
         },
         days: {
-            from: _subtractDays(value)
+            from: subtractDays(value)
         },
         hours: {
-            from: _subtractHours(value)
+            from: subtractHours(value)
         },
         minutes: {
-            from: _subtractMinutes(value)
+            from: subtractMinutes(value)
         },
         seconds: {
-            from: _subtractSeconds(value)
+            from: subtractSeconds(value)
         },
         milliseconds: {
-            from: _addMilliseconds(value)
+            from: addMilliseconds(value)
         }
     });
 }

@@ -1,8 +1,9 @@
 import { expect } from "chai";
 import { Simply } from "../src/index";
+import { SimplyDate } from "../src/models";
 
 describe("hours.spec.ts ", () => {
-    let sDt: Simply.SimplyDate;
+    let sDt: SimplyDate;
     it("3.4.1 correctly subtract an hour", () => {
         sDt = Simply.from(new Date(`2017-03-01T03:24:00`));
         expect(Simply.subtract(3).hours.from(sDt).day).to.equal(1);
