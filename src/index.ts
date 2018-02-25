@@ -1,7 +1,7 @@
 import { getTotalNumberOfDaysInMonth, deterimineLastDayOfMonth } from "./utilities";
 import { SimplyDate } from "./models";
 import { addYears, addMonths, addDays, addHours, addMinutes, addSeconds, addMilliseconds } from "./addition";
-import { subtractYears, subtractMonths, subtractDays, subtractHours, subtractMinutes, subtractSeconds } from "./subtraction";
+import { subtractYears, subtractMonths, subtractDays, subtractHours, subtractMinutes, subtractSeconds, subtractMilliseconds } from "./subtraction";
 
 export namespace Simply {
 
@@ -85,16 +85,6 @@ export namespace Simply {
         }
     });
 
-    
-
-    
-
-    
-
-    
-
-    
-
     export const subtract = (value: number) => ({
         years: {
             from: subtractYears(value)
@@ -115,7 +105,7 @@ export namespace Simply {
             from: subtractSeconds(value)
         },
         milliseconds: {
-            from: addMilliseconds(value)
+            from: subtractMilliseconds(value)
         }
     });
 }

@@ -6,6 +6,7 @@ import './seconds.spec';
 import './years.spec';
 import './days.spec';
 import './hours.spec';
+import './milliseconds.spec';
 import { SimplyDate } from "../src/models";
 
 describe("SimplyDate library unit-tests", () => {

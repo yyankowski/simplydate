@@ -123,3 +123,18 @@ export const subtractSeconds = (value: number) => (sDt: SimplyDate): SimplyDate 
     let { minute, hour, day, month, year } = sDt;
     return Object.assign({ ...sDt }, { year, month, day, hour, minute, second });
 };
+
+export const subtractMilliseconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
+    let { millisecond } = sDt;
+    const subtractOneSecond = subtractSeconds(1);
+    while (value--) {
+        millisecond--;
+        if (millisecond === -1) {
+            millisecond = 999;
+            sDt = subtractOneSecond(sDt);
+        }
+    }
+
+    let { minute, hour, day, month, year, second } = sDt;
+    return Object.assign({ ...sDt }, { year, month, day, hour, minute, second, millisecond });
+};

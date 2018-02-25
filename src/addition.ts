@@ -118,6 +118,24 @@ import { getTotalNumberOfDaysInMonth } from "./utilities";
         return Object.assign({ ...sDt }, { year, month, day, hour, minute, second });
     };
 
-    export const addMilliseconds = (value: number) => (sDt: SimplyDate): SimplyDate => Object.assign({
-        ...sDt
-    }, { hour: (sDt.hour + value) % 24 });
+    export const addMilliseconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
+        let {millisecond} = sDt;
+        const sum = value + millisecond;
+
+        if(sum < 1000){
+            millisecond = sum;
+        }
+        else{
+            const addOneSecond = addSeconds(1);
+            while(value--){
+                millisecond++;
+                if(millisecond === 1000){
+                    millisecond = 0;
+                    sDt = addOneSecond(sDt);
+                }
+            }
+        }
+
+        const {year, month, day, hour, minute, second} = sDt;
+        return Object.assign({ ...sDt }, { year, month, day, hour, minute, second, millisecond });
+    };
