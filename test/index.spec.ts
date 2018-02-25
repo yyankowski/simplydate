@@ -52,4 +52,30 @@ describe("SimplyDate library unit-tests", () => {
             expect(Simply.add(2).years.to(sDt).year).to.equal(1997);
         });
     });
+
+    describe("2.0 formatting functionality should", () => {
+        let sDt: SimplyDate;
+
+        it("2.1 format a SimplyDate as expected", () => {
+            sDt = Simply.from(new Date(`2017-03-01T03:24:00`));
+            expect(Simply.format(sDt).as("YYYY-MM-DDTHH:mm")).to.equal("2017-03-01T03:24");
+            expect(Simply.format(sDt).as("YYYY-MM-DDTHH:mm:ss")).to.equal("2017-03-01T03:24:00");
+            expect(Simply.format(sDt).as("YYYY-MM-DDTHH:mm:ss.SSS")).to.equal("2017-03-01T03:24:00.000");
+        });
+
+        it("2.2 format a SimplyDate as expected", () => {
+            sDt = Simply.from(new Date(`2017-03-01T03:01:00`));
+            expect(Simply.format(sDt).as("YYYY-MM-DDTHH:mm:ss.SSS")).to.equal("2017-03-01T03:01:00.000");
+        });
+
+        it("2.3 format a SimplyDate as expected", () => {
+            sDt = Simply.from(new Date(`2017-03-01`));
+            expect(Simply.format(sDt).as("YYYY-MM-DD")).to.equal("2017-03-01");
+        });
+
+        it("2.4 format a SimplyDate as expected", () => {
+            sDt = Simply.from(new Date(`2017-03-01T03:24`));
+            expect(Simply.format(sDt).as("HH:mm")).to.equal("03:24");
+        });
+    });
 });

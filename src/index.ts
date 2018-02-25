@@ -1,9 +1,12 @@
 import { SimplyDate } from "./models";
 import { addYears, addMonths, addDays, addHours, addMinutes, addSeconds, addMilliseconds } from "./addition";
 import { subtractYears, subtractMonths, subtractDays, subtractHours, subtractMinutes, subtractSeconds, subtractMilliseconds } from "./subtraction";
+import {Formats} from "./formats";
 
 export namespace Simply {
 
+    import simplyDateToStringByFormatMap = Formats.simplyDateToStringByFormatMap;
+    import DATETIME_LOCAL = Formats.DATETIME_LOCAL;
     export const from = (dt: Date): SimplyDate => ({
         year: dt.getFullYear(),
         month: dt.getMonth() + 1,
@@ -110,5 +113,16 @@ export namespace Simply {
         milliseconds: {
             from: subtractMilliseconds(value)
         }
+    });
+
+    export const format = (sDt: SimplyDate) => ({
+      as: (format: string) => {
+          const formatFn = simplyDateToStringByFormatMap[format];
+          if(formatFn) {
+              return formatFn(sDt);
+          }
+
+          return simplyDateToStringByFormatMap[DATETIME_LOCAL](sDt);
+      }
     });
 }
