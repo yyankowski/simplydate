@@ -26,7 +26,7 @@ import { getTotalNumberOfDaysInMonth } from "./utilities";
             year,
             month: mod === 0 ? 12 : mod
         });
-    }
+    };
 
     export const addDays = (value: number) => (sDt: SimplyDate): SimplyDate => {
         let { day } = sDt;

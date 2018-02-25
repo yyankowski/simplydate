@@ -8,7 +8,7 @@
     "compile": "npm run _tsc",
     "test": "mocha -r ts-node/register ./test/index.spec.ts"
   },
-  "types": "./src/index.ts", 
+  "types": "./src/index.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yyankowski/simplidate.git"
