@@ -2,11 +2,14 @@
   "name": "simplidate",
   "version": "1.0.0",
   "description": "Simple date-time manipulation.",
-  "main": "./src/index.js",
+  "main": "./src/index.ts",
   "scripts": {
+    "clean": "rm -rf ./dist/*",
+    "dist": "npm run compile && npm run minify && rm -rf ./tmp/*",
     "_tsc": "./node_modules/typescript/bin/tsc",
-    "compile": "npm run _tsc",
-    "test": "mocha -r ts-node/register ./test/index.spec.ts"
+    "compile": "npm run clean && npm run _tsc",
+    "test": "mocha -r ts-node/register ./test/index.spec.ts",
+    "minify": "./node_modules/uglify-js/bin/uglifyjs -cmo ./dist/simply.min.js ./tmp/*"
   },
   "types": "./src/index.ts",
   "repository": {
@@ -30,6 +33,7 @@
     "chai": "4.1.2",
     "mocha": "5.0.0",
     "ts-node": "4.1.0",
-    "typescript": "2.7.1"
+    "typescript": "2.7.1",
+    "uglify-js": "3.3.12"
   }
 }

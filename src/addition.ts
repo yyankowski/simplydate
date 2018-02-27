@@ -1,5 +1,6 @@
 import { SimplyDate } from "./models";
 import { getTotalNumberOfDaysInMonth } from "./utilities";
+import {subtractYears} from "./subtraction";
 
 /**
      * Add 
@@ -7,9 +8,13 @@ import { getTotalNumberOfDaysInMonth } from "./utilities";
      */
     // export const add =  _transform("to", _toInc);
     // export const subtract = _transform("from", _toDec);
-    export const addYears = (value: number) => (sDt: SimplyDate): SimplyDate => Object.assign({
-        ...sDt
-    }, { year: sDt.year + value });
+    export const addYears = (value: number) => (sDt: SimplyDate): SimplyDate => {
+        if(value < 0) return subtractYears(value)(sDt);
+
+        return Object.assign({
+            ...sDt
+        }, { year: sDt.year + value });
+    };
 
 
     export const addMonths = (value: number) => (sDt: SimplyDate): SimplyDate => {
