@@ -7,7 +7,7 @@ export namespace Formats {
     export const DATE = "YYYY-MM-DD";
     export const TIME = "HH:mm";
 
-    const pad = (num: number):string => num < 10 ? `0${num}`: num;
+    const pad = (num: number):string => num < 10 ? `0${num}`: `${num}`;
     const padMs = (num): string  => {
         if(num < 10) return `00${num}`;
         if(num < 100) return `0${num}`;

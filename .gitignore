@@ -1,6 +1,11 @@
 .idea/
 .vscode
 node_modules
+tmp/
 index.js
 index.js.map
 package-lock.json
+npm
+scripts/
+src/*.js
+test/*.js
