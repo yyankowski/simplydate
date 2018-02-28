@@ -10,6 +10,11 @@ describe("days.spec.ts ", () => {
             sDt = Simply.from(new Date(`2017-03-01T03:24:00`));
             expect(Simply.subtract(1).days.from(sDt).day).to.equal(28);
         });
+
+        it("1.2 correctly subtract a negative value", () => {
+            sDt = Simply.from(new Date(`2017-03-01T03:24:00`));
+            expect(Simply.subtract(-1).days.from(sDt).day).to.equal(2);
+        });
     });
     
     describe("2.0 addition test cases ", () => {
@@ -27,6 +32,11 @@ describe("days.spec.ts ", () => {
         it("2.3 correctly add a day to the last day of February of a regular year", () => {
             sDt = Simply.from(new Date(`2017-01-28T03:24:00`));
             expect(Simply.add(3).days.to(sDt).day).to.equal(31);
+        });
+
+        it("2.4 correctly add a negative value", () => {
+            sDt = Simply.from(new Date(`2017-01-28T03:24:00`));
+            expect(Simply.add(-3).days.to(sDt).day).to.equal(25);
         });
     });
 });
