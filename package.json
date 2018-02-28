@@ -9,7 +9,7 @@
     "_tsc": "./node_modules/typescript/bin/tsc",
     "compile": "npm run clean && npm run _tsc",
     "test": "mocha -r ts-node/register ./test/index.spec.ts",
-    "minify": "./node_modules/uglify-js/bin/uglifyjs -cmo ./dist/simply.min.js ./tmp/*"
+    "minify": "./node_modules/uglify-js/bin/uglifyjs ./tmp/*.js -o ./dist/simply.min.js --source-map --screw-ie8 -c -m"
   },
   "types": "./src/index.ts",
   "repository": {

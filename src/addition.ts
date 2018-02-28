@@ -1,6 +1,9 @@
 import { SimplyDate } from "./models";
 import { getTotalNumberOfDaysInMonth } from "./utilities";
-import {subtractYears} from "./subtraction";
+import {
+    subtractDays, subtractHours, subtractMilliseconds, subtractMinutes, subtractMonths, subtractSeconds,
+    subtractYears
+} from "./subtraction";
 
 /**
      * Add 
@@ -18,6 +21,8 @@ import {subtractYears} from "./subtraction";
 
 
     export const addMonths = (value: number) => (sDt: SimplyDate): SimplyDate => {
+        if(value < 0) return subtractMonths(-value)(sDt);
+
         const sumOfMonths = sDt.month + value;
         const mod = (sDt.month + value) % 12;
 
@@ -34,6 +39,8 @@ import {subtractYears} from "./subtraction";
     };
 
     export const addDays = (value: number) => (sDt: SimplyDate): SimplyDate => {
+        if(value < 0) return subtractDays(-value)(sDt);
+
         let { day } = sDt;
         const lastDayOfMonth = getTotalNumberOfDaysInMonth(sDt.year, sDt.month);
         
@@ -58,6 +65,8 @@ import {subtractYears} from "./subtraction";
     };
 
     export const addHours = (value: number) => (sDt: SimplyDate): SimplyDate => {
+        if(value < 0) return subtractHours(-value)(sDt);
+
         let { hour } = sDt;
         const sum = hour + value;
 
@@ -81,6 +90,8 @@ import {subtractYears} from "./subtraction";
     };
 
     export const addMinutes = (value: number) => (sDt: SimplyDate): SimplyDate => {
+        if(value < 0) return subtractMinutes(-value)(sDt);
+
         let {minute} = sDt;
         const sum = minute + value;
         if(sum < 60){
@@ -102,6 +113,8 @@ import {subtractYears} from "./subtraction";
     };
 
     export const addSeconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
+        if(value < 0) return subtractSeconds(-value)(sDt);
+
         let {second} = sDt;
         const sum = value + second;
 
@@ -124,6 +137,8 @@ import {subtractYears} from "./subtraction";
     };
 
     export const addMilliseconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
+        if(value < 0) return subtractMilliseconds(-value)(sDt);
+
         let {millisecond} = sDt;
         const sum = value + millisecond;
 
