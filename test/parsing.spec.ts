@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Simply } from "../src/index";
 describe("parsing.spec.ts parsing strings should", () => {
     it("4.1 ", () => {
-        const {year, month, day, hour, minute, second, millisecond} = Simply.fromString("12-25-1995", "MM-DD-YYYY");
+        const {year, month, day, hour, minute, second, millisecond} = Simply.from.string("12-25-1995", "MM-DD-YYYY");
         expect(year).to.equal(1995);
         expect(month).to.equal(12);
         expect(day).to.equal(25);

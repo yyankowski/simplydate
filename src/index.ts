@@ -7,15 +7,6 @@ export namespace Simply {
 
     import simplyDateToStringByFormatMap = Formats.simplyDateToStringByFormatMap;
     import DATETIME_LOCAL = Formats.DATETIME_LOCAL;
-    export const from = (dt: Date): SimplyDate => ({
-        year: dt.getFullYear(),
-        month: dt.getMonth() + 1,
-        day: dt.getDate(),
-        hour: dt.getHours(),
-        minute: dt.getMinutes(),
-        second: dt.getSeconds(),
-        millisecond: dt.getMilliseconds()
-    });
 
     const dateTimeStringFromPattern = {
         "MM-DD-YYYY": (dt: string): SimplyDate => {
@@ -32,29 +23,45 @@ export namespace Simply {
         }
     };
 
+    const fromDate = (dt: Date): SimplyDate => ({
+        year: dt.getFullYear(),
+        month: dt.getMonth() + 1,
+        day: dt.getDate(),
+        hour: dt.getHours(),
+        minute: dt.getMinutes(),
+        second: dt.getSeconds(),
+        millisecond: dt.getMilliseconds()
+    });
+
+    /**
+     * From Unix epoch
+     * @param dt 1514851200000
+     */
+    const fromNumber = (dt: number): SimplyDate => from.date(new Date(dt));
+
     /**
      *
      * @param {string} dt a string of type 2015-02-29T03:24:00
      * @param {string} pattern
      * @returns {SimplyDate}
      */
-    export const fromString = (dt: string, pattern?: string): SimplyDate => {
+    const fromString = (dt: string, pattern?: string): SimplyDate => {
         if (pattern) {
             return dateTimeStringFromPattern[pattern](dt);
         }
-        return from(new Date(dt));
+        return from.date(new Date(dt));
     };
 
-    /**
-     * From Unix epoch
-     * @param dt 1514851200000
-     */
-    export const fromNumber = (dt: number): SimplyDate => from(new Date(dt));
+    export const from = {
+        date: fromDate,
+        number: fromNumber,
+        string: fromString
+    };
 
     export const now = (): SimplyDate => {
         const now = new Date();
 
-        return from(now);
+        return from.date(now);
     };
 
     /**
