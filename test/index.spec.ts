@@ -80,7 +80,12 @@ describe("SimplyDate library unit-tests", () => {
 
         it("2.5 format to am", () => {
             sDt = Simply.from.string("2017-03-29T03:24:00");
-            expect(Simply.format(sDt).as("'YY MMM DD h:mm A'")).to.equal("17 Feb 28 3:24 AM");
-        })
+            expect(Simply.format(sDt).as("YY MMM DD h:mm A")).to.equal("17 Mar 29 3:24 AM");
+        });
+
+        it("2.6 format to pm", () => {
+            sDt = Simply.from.string("2017-03-29T13:24:00");
+            expect(Simply.format(sDt).as("YY MMM DD h:mm A")).to.equal("17 Mar 29 1:24 PM");
+        });
     });
 });
