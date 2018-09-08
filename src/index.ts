@@ -76,7 +76,7 @@ export namespace Simply {
      */
     const toMsSinceEpoch = (sDt: SimplyDate): number => {
         const dt = new Date();
-        const _sdt = Simply.add(dt.getTimezoneOffset()).minutes.to(sDt);
+        const _sdt = add(dt.getTimezoneOffset()).minutes.to(sDt);
         return Date.UTC(_sdt.year, _sdt.month - 1, _sdt.day, _sdt.hour, _sdt.minute, _sdt.second, _sdt.millisecond);
     };
 

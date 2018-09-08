@@ -2,7 +2,7 @@
 npm
 .vscode
 node_modules
-tmp/
+tmp
 index.js
 index.js.map
 package-lock.json
@@ -10,3 +10,4 @@ npm
 scripts/
 src/*.js
 test/*.js
+dist
