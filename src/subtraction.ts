@@ -1,6 +1,6 @@
-import { SimplyDate } from "./models";
-import { deterimineLastDayOfMonth } from "./utilities";
-import {addDays, addHours, addMilliseconds, addMinutes, addMonths, addSeconds} from "./addition";
+import { SimplyDate } from './models';
+import { determineLastDayOfMonth } from './utilities';
+import {addDays, addHours, addMilliseconds, addMinutes, addMonths, addSeconds} from './addition';
 
 export const subtractYears = (value: number) => (sDt: SimplyDate): SimplyDate => Object.assign({
     ...sDt
@@ -12,7 +12,7 @@ export const subtractYears = (value: number) => (sDt: SimplyDate): SimplyDate =>
  * @returns {(sDt: SimplyDate) => SimplyDate}
  */
 export const subtractMonths = (value: number) => (sDt: SimplyDate): SimplyDate => {
-    if (value < 0) return addMonths(-value)(sDt);
+    if (value < 0) { return addMonths(-value)(sDt); }
 
     const diff = sDt.month - value;
 
@@ -32,14 +32,14 @@ export const subtractMonths = (value: number) => (sDt: SimplyDate): SimplyDate =
             }
         }
 
-        day = deterimineLastDayOfMonth(year, month, day);
+        day = determineLastDayOfMonth(year, month, day);
     }
 
-    return Object.assign({ ...sDt }, { year, month, day });
+    return {...sDt, year, month, day };
 };
 
 export const subtractDays = (value: number) => (sDt: SimplyDate): SimplyDate => {
-    if(value < 0) return addDays(-value)(sDt);
+    if(value < 0) { return addDays(-value)(sDt); }
 
     let year = sDt.year;
     let month = sDt.month;
@@ -59,19 +59,19 @@ export const subtractDays = (value: number) => (sDt: SimplyDate): SimplyDate => 
                 month--;
                 if (month === 0) {
                     month = 12;
-                    year--
+                    year--;
                 }
 
-                day = deterimineLastDayOfMonth(year, month, day);
+                day = determineLastDayOfMonth(year, month, day);
             }
         }
     }
 
-    return Object.assign({ ...sDt }, { year, month, day });
+    return { ...sDt,  year, month, day };
 };
 
 export const subtractHours = (value: number) => (sDt: SimplyDate): SimplyDate => {
-    if(value < 0) return addHours(-value)(sDt);
+    if(value < 0) { return addHours(-value)(sDt); }
 
     let hour = sDt.hour;
     const diff = hour - value;
@@ -91,15 +91,11 @@ export const subtractHours = (value: number) => (sDt: SimplyDate): SimplyDate =>
         }
     }
 
-    let year = sDt.year;
-    let month = sDt.month;
-    let day = sDt.day;
-
-    return Object.assign({ ...sDt }, { year, month, day, hour });
+    return { ...sDt, hour };
 };
 
 export const subtractMinutes = (value: number) => (sDt: SimplyDate): SimplyDate => {
-    if(value < 0) return addMinutes(-value)(sDt);
+    if(value < 0) { return addMinutes(-value)(sDt); }
 
     let minute = sDt.minute;
 
@@ -114,21 +110,16 @@ export const subtractMinutes = (value: number) => (sDt: SimplyDate): SimplyDate 
             minute--;
             if (minute === -1) {
                 minute = 59;
-                sDt = subtractOneHour(sDt)
+                sDt = subtractOneHour(sDt);
             }
         }
     }
 
-    let year = sDt.year;
-    let month = sDt.month;
-    let day = sDt.day;
-    let hour = sDt.hour;
-
-    return Object.assign({ ...sDt }, { year, month, day, hour, minute });
+    return { ...sDt, minute };
 };
 
 export const subtractSeconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
-    if(value < 0) return addSeconds(-value)(sDt);
+    if(value < 0) { return addSeconds(-value)(sDt); }
 
     let { second } = sDt;
 
@@ -148,12 +139,11 @@ export const subtractSeconds = (value: number) => (sDt: SimplyDate): SimplyDate 
         }
     }
 
-    let { minute, hour, day, month, year } = sDt;
-    return Object.assign({ ...sDt }, { year, month, day, hour, minute, second });
+    return { ...sDt, second };
 };
 
 export const subtractMilliseconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
-    if(value < 0) return addMilliseconds(-value)(sDt);
+    if(value < 0) { return addMilliseconds(-value)(sDt); }
 
     let { millisecond } = sDt;
 
@@ -173,6 +163,5 @@ export const subtractMilliseconds = (value: number) => (sDt: SimplyDate): Simply
         }
     }
 
-    let { minute, hour, day, month, year, second } = sDt;
-    return Object.assign({ ...sDt }, { year, month, day, hour, minute, second, millisecond });
+    return { ...sDt, millisecond };
 };

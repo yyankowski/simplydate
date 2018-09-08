@@ -4,6 +4,6 @@ export type SimplyDate = {
     day: number,
     hour: number,
     minute: number,
-    second: number
+    second: number,
     millisecond: number
-}
+};

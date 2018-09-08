@@ -1,45 +1,42 @@
-import { SimplyDate } from "./models";
-import { getTotalNumberOfDaysInMonth } from "./utilities";
+import { SimplyDate } from './models';
+import { getTotalNumberOfDaysInMonth } from './utilities';
 import {
     subtractDays, subtractHours, subtractMilliseconds, subtractMinutes, subtractMonths, subtractSeconds,
     subtractYears
-} from "./subtraction";
+} from './subtraction';
 
-/**
+    /**
      * Add 
      * @param value 
      */
     // export const add =  _transform("to", _toInc);
     // export const subtract = _transform("from", _toDec);
     export const addYears = (value: number) => (sDt: SimplyDate): SimplyDate => {
-        if(value < 0) return subtractYears(value)(sDt);
+        if(value < 0) { return subtractYears(value)(sDt); }
 
-        return Object.assign({
-            ...sDt
-        }, { year: sDt.year + value });
+        return {
+            ...sDt, year: sDt.year + value
+        };
     };
 
-
     export const addMonths = (value: number) => (sDt: SimplyDate): SimplyDate => {
-        if(value < 0) return subtractMonths(-value)(sDt);
+        if(value < 0) { return subtractMonths(-value)(sDt); }
 
         const sumOfMonths = sDt.month + value;
         const mod = (sDt.month + value) % 12;
 
-        if (sumOfMonths <= 12)
+        if (sumOfMonths <= 12) {
             return Object.assign({ ...sDt }, { month: sumOfMonths });
+        }
 
         const yearsToAdd = (sumOfMonths % 12) === 0 ? (sumOfMonths / 12) - 1 : ~~(sumOfMonths / 12);
 
         const {year} = addYears(yearsToAdd)(sDt);
-        return Object.assign({ ...sDt }, {
-            year,
-            month: mod === 0 ? 12 : mod
-        });
+        return { ...sDt, year, month: mod === 0 ? 12 : mod };
     };
 
     export const addDays = (value: number) => (sDt: SimplyDate): SimplyDate => {
-        if(value < 0) return subtractDays(-value)(sDt);
+        if(value < 0) { return subtractDays(-value)(sDt); }
 
         let { day } = sDt;
         const lastDayOfMonth = getTotalNumberOfDaysInMonth(sDt.year, sDt.month);
@@ -59,13 +56,11 @@ import {
             }
         }
 
-        const {year, month} = sDt;
-
-        return Object.assign({ ...sDt }, { year, month, day });
+        return { ...sDt, day };
     };
 
     export const addHours = (value: number) => (sDt: SimplyDate): SimplyDate => {
-        if(value < 0) return subtractHours(-value)(sDt);
+        if(value < 0) { return subtractHours(-value)(sDt); }
 
         let { hour } = sDt;
         const sum = hour + value;
@@ -84,13 +79,11 @@ import {
             }
         }
 
-        const {year, month, day} = sDt;
-
-        return Object.assign({ ...sDt }, { year, month, day, hour });
+        return { ...sDt, hour };
     };
 
     export const addMinutes = (value: number) => (sDt: SimplyDate): SimplyDate => {
-        if(value < 0) return subtractMinutes(-value)(sDt);
+        if(value < 0) { return subtractMinutes(-value)(sDt); }
 
         let {minute} = sDt;
         const sum = minute + value;
@@ -108,12 +101,11 @@ import {
             }
         }
 
-        const {year, month, day, hour} = sDt;
-        return Object.assign({ ...sDt }, { year, month, day, hour, minute });
+        return { ...sDt, minute };
     };
 
     export const addSeconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
-        if(value < 0) return subtractSeconds(-value)(sDt);
+        if(value < 0) { return subtractSeconds(-value)(sDt); }
 
         let {second} = sDt;
         const sum = value + second;
@@ -132,12 +124,11 @@ import {
             }
         }
 
-        const {year, month, day, hour, minute} = sDt;
-        return Object.assign({ ...sDt }, { year, month, day, hour, minute, second });
+        return { ...sDt, second };
     };
 
     export const addMilliseconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
-        if(value < 0) return subtractMilliseconds(-value)(sDt);
+        if(value < 0) { return subtractMilliseconds(-value)(sDt); }
 
         let {millisecond} = sDt;
         const sum = value + millisecond;
@@ -156,6 +147,5 @@ import {
             }
         }
 
-        const {year, month, day, hour, minute, second} = sDt;
-        return Object.assign({ ...sDt }, { year, month, day, hour, minute, second, millisecond });
+        return { ...sDt, millisecond };
     };
