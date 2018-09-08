@@ -2,9 +2,16 @@
 A simple functional, non-mutating date-time manipulation library implemented in Typescript.
 
 Usage:
+```
+npm install --save simplydate
+```
+
+````
+import {Simply} from "simplydate/dist"
+````
 
 ```
-const simpleDate = Simply.from(new Date(`2015-02-29T03:24:00`));
+const simpleDate = Simply.from.date.(new Date(`2015-02-29T03:24:00`));
 
 ```
 Addition:
