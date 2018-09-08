@@ -37,7 +37,7 @@ export namespace Simply {
      * From Unix epoch
      * @param dt 1514851200000
      */
-    const fromNumber = (dt: number): SimplyDate => from.date(new Date(dt));
+    const fromMsSinceEpoch = (dt: number): SimplyDate => from.date(new Date(dt));
 
     /**
      *
@@ -54,7 +54,7 @@ export namespace Simply {
 
     export const from = {
         date: fromDate,
-        number: fromNumber,
+        msSinceEpoch: fromMsSinceEpoch,
         string: fromString
     };
 
@@ -70,19 +70,19 @@ export namespace Simply {
 
     /**
      * Returns the number of milliseconds in a SimplyDate object since January 1, 1970, 00:00:00, universal time.
+     * Equivalent to getTime of the JavaScript Date object.
      * @param {SimplyDate} sDt
      * @returns {number}
      */
-    const toNumber = (sDt: SimplyDate): number =>
-        Date.UTC(sDt.year, sDt.month - 1, sDt.day, sDt.hour, sDt.minute, sDt.second, sDt.millisecond);
-
-    // const toIsoNumber = (sDt: SimplyDate, timezoneOffsetInMilliseconds: number): number => {
-    //     return toNumber(Simply.subtract(timezoneOffsetInMilliseconds).milliseconds.from(sDt));
-    // };
+    const toMsSinceEpoch = (sDt: SimplyDate): number => {
+        const dt = new Date();
+        const _sdt = Simply.add(dt.getTimezoneOffset()).minutes.to(sDt);
+        return Date.UTC(_sdt.year, _sdt.month - 1, _sdt.day, _sdt.hour, _sdt.minute, _sdt.second, _sdt.millisecond);
+    };
 
     export const to = {
         date: toDate,
-        number: toNumber
+        msSinceEpoch: toMsSinceEpoch
     };
 
     export const now = (): SimplyDate => {
