@@ -1,6 +1,6 @@
 {
   "name": "simplydate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple date-time manipulation.",
   "main": "./src/index.ts",
   "scripts": {
@@ -11,7 +11,7 @@
     "test": "mocha -r ts-node/register ./test/index.spec.ts",
     "lint": "tslint -p tsconfig.json",
     "minify-src": "./node_modules/uglify-js/bin/uglifyjs ./tmp/*.js -o ./dist/simply.min.js --source-map --screw-ie8 -c -m",
-    "prepare" : "npm run dist",
+    "prepare": "npm run dist",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "postversion": "git push && git push --tags"
