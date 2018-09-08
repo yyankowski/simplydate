@@ -11,7 +11,7 @@ import {Simply} from "simplydate/dist"
 ````
 
 ```
-const simpleDate = Simply.from.date.(new Date(`2015-02-29T03:24:00`));
+const simpleDate = Simply.from.date(new Date(`2015-02-29T03:24:00`));
 
 ```
 Addition:
