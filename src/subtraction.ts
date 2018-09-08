@@ -2,9 +2,8 @@ import { SimplyDate } from './models';
 import { determineLastDayOfMonth } from './utilities';
 import {addDays, addHours, addMilliseconds, addMinutes, addMonths, addSeconds} from './addition';
 
-export const subtractYears = (value: number) => (sDt: SimplyDate): SimplyDate => Object.assign({
-    ...sDt
-}, { year: sDt.year - value });
+export const subtractYears = (value: number) => (sDt: SimplyDate): SimplyDate => ({
+    ...sDt, year: sDt.year - value });
 
 /**
  * Subtracts months from the current month value. If the value is negative then an addition operation is run.

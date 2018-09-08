@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "allowJs": true,
     "alwaysStrict": true,
+    "declaration": true,
+    "declarationDir": "./dist",
     "lib": [
       "es2015",
       "es2016",
