@@ -78,14 +78,19 @@ describe("SimplyDate library unit-tests", () => {
             expect(Simply.format(sDt).as("HH:mm")).to.equal("03:24");
         });
 
-        it("2.5 format to am", () => {
+        it("2.5 format as am", () => {
             sDt = Simply.from.string("2017-03-29T03:24:00");
             expect(Simply.format(sDt).as("YY MMM DD h:mm A")).to.equal("17 Mar 29 3:24 AM");
         });
 
-        it("2.6 format to pm", () => {
+        it("2.6 format as pm", () => {
             sDt = Simply.from.string("2017-03-29T13:24:00");
             expect(Simply.format(sDt).as("YY MMM DD h:mm A")).to.equal("17 Mar 29 1:24 PM");
+        });
+
+        it("2.7 format as HH:mm:ss", () => {
+            sDt = Simply.from.string("2017-03-29T13:24:00");
+            expect(Simply.format(sDt).as("HH:mm:ss")).to.equal("13:24:00");
         });
     });
 });

@@ -1,7 +1,7 @@
-import { SimplyDate } from "./models";
-import { addYears, addMonths, addDays, addHours, addMinutes, addSeconds, addMilliseconds } from "./addition";
-import { subtractYears, subtractMonths, subtractDays, subtractHours, subtractMinutes, subtractSeconds, subtractMilliseconds } from "./subtraction";
-import {Formats} from "./formats";
+import { SimplyDate } from './models';
+import { addYears, addMonths, addDays, addHours, addMinutes, addSeconds, addMilliseconds } from './addition';
+import { subtractYears, subtractMonths, subtractDays, subtractHours, subtractMinutes, subtractSeconds, subtractMilliseconds } from './subtraction';
+import {Formats} from './formats';
 
 export namespace Simply {
 
@@ -9,17 +9,17 @@ export namespace Simply {
     import DATETIME_LOCAL = Formats.DATETIME_LOCAL;
 
     const dateTimeStringFromPattern = {
-        "MM-DD-YYYY": (dt: string): SimplyDate => {
-            const data = dt.split("-");
+        'MM-DD-YYYY': (dt: string): SimplyDate => {
+            const data = dt.split('-');
             return {
-                year: Number.parseInt(data[2]),
-                month: Number.parseInt(data[0]),
-                day: Number.parseInt(data[1]),
+                year: Number.parseInt(data[2], 10),
+                month: Number.parseInt(data[0], 10),
+                day: Number.parseInt(data[1], 10),
                 hour: 0,
                 minute: 0,
                 second: 0,
                 millisecond: 0
-            }
+            };
         }
     };
 
@@ -58,20 +58,35 @@ export namespace Simply {
         string: fromString
     };
 
-    export const now = (): SimplyDate => {
-        const now = new Date();
-
-        return from.date(now);
-    };
-
     /**
      * Converts an instance of SimplyDate to Date.
      * @param sDt
      */
-    export const toDate = (sDt: SimplyDate): Date => {
-        if (!sDt) return null;
+    const toDate = (sDt: SimplyDate): Date => {
+        if (!sDt) { return null; }
 
-        return new Date(sDt.year, sDt.month, sDt.day, sDt.hour, sDt.minute, sDt.second, sDt.millisecond);
+        return new Date(sDt.year, sDt.month - 1, sDt.day, sDt.hour, sDt.minute, sDt.second, sDt.millisecond);
+    };
+
+    /**
+     * Returns the number of milliseconds in a SimplyDate object since January 1, 1970, 00:00:00, universal time.
+     * @param {SimplyDate} sDt
+     * @returns {number}
+     */
+    const toNumber = (sDt: SimplyDate): number =>
+        Date.UTC(sDt.year, sDt.month - 1, sDt.day, sDt.hour, sDt.minute, sDt.second, sDt.millisecond);
+
+    // const toIsoNumber = (sDt: SimplyDate, timezoneOffsetInMilliseconds: number): number => {
+    //     return toNumber(Simply.subtract(timezoneOffsetInMilliseconds).milliseconds.from(sDt));
+    // };
+
+    export const to = {
+        date: toDate,
+        number: toNumber
+    };
+
+    export const now = (): SimplyDate => {
+        return from.date(new Date());
     };
 
     export const add = (value: number) => ({
@@ -123,8 +138,8 @@ export namespace Simply {
     });
 
     export const format = (sDt: SimplyDate) => ({
-      as: (format: string) => {
-          const formatFn = simplyDateToStringByFormatMap[format];
+      as: (_format: string) => {
+          const formatFn = simplyDateToStringByFormatMap[_format];
           if(formatFn) {
               return formatFn(sDt);
           }
@@ -132,4 +147,8 @@ export namespace Simply {
           return simplyDateToStringByFormatMap[DATETIME_LOCAL](sDt);
       }
     });
+
+    export const getTimeZoneOffsetMs = (): number => {
+        return new Date().getTimezoneOffset();
+    };
 }

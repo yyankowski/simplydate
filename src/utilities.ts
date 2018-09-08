@@ -18,7 +18,7 @@ export const getTotalNumberOfDaysInMonth = (year: number, month: number): number
     return 31;
 };
 
-export const deterimineLastDayOfMonth = (year: number, month: number, day: number): number => {
+export const determineLastDayOfMonth = (year: number, month: number, day: number): number => {
     if (month === 2 && day > 28) {
         return isLeapYear(year) ? 29 : 28;
     }
