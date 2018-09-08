@@ -1,4 +1,4 @@
-# simplydate
+# SimplyDate
 A simple functional, non-mutating date-time manipulation library implemented in Typescript.
 
 Usage:
