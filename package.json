@@ -5,7 +5,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "clean": "rm -rf ./dist/*",
-    "dist": "npm run lint && npm run test && npm run _compile && npm run minify-src && rm -rf ./tmp/*",
+    "dist": "npm run lint && npm run test && npm run _compile",
     "_tsc": "./node_modules/typescript/bin/tsc",
     "_compile": "npm run clean && npm run _tsc",
     "test": "mocha -r ts-node/register ./test/index.spec.ts",

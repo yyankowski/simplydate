@@ -9,7 +9,7 @@
       "es2017",
       "dom"
     ],
-    "outDir": "./tmp",
+    "outDir": "./dist",
     "target": "es5",
     "removeComments": true,
     "preserveConstEnums": true,
