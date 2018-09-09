@@ -1,6 +1,5 @@
 import { expect } from 'chai';
-import { Simply } from '../src';
-import { SimplyDate } from '../src/models';
+import {Simply, SimplyDate} from '../src';
 
 describe('days.spec.ts ', () => {
     let sDt: SimplyDate;
