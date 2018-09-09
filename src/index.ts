@@ -1,4 +1,10 @@
-import {Localization} from './l10n/month/month-en';
+// &&&& Localizations
+class Localization {
+    static readonly  MONTHS = {
+        MMM : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    };
+}
+// &&&& // Localizations
 
 export type SimplyDate = {
     year: number,
