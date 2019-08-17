@@ -52,6 +52,7 @@ const determineLastDayOfMonth = (year: number, month: number, day: number): numb
 // &&&& // utilities
 
 // &&&&&&& subtraction
+
 const subtractYears = (value: number) => (sDt: SimplyDate): SimplyDate => {
 
     let day = sDt.day;
@@ -65,7 +66,7 @@ const subtractYears = (value: number) => (sDt: SimplyDate): SimplyDate => {
         }
     }
 
-    return Object.assign<SimplyDate, Pick<SimplyDate, 'year' | 'day'>>(sDt, {year: sDt.year - value, day});
+    return {...sDt, year: sDt.year - value, day};
 };
 
 /**
@@ -99,7 +100,7 @@ const subtractMonths = (value: number) => (sDt: SimplyDate): SimplyDate => {
         day = determineLastDayOfMonth(year, month, day);
     }
 
-    return Object.assign<SimplyDate, Pick<SimplyDate, 'year' | 'month' | 'day'>>(sDt, {year, month, day});
+    return {...sDt, year, month, day};
 };
 
 const subtractDays = (value: number) => (sDt: SimplyDate): SimplyDate => {
@@ -133,7 +134,7 @@ const subtractDays = (value: number) => (sDt: SimplyDate): SimplyDate => {
         }
     }
 
-    return Object.assign<SimplyDate, Pick<SimplyDate, 'year' | 'month' | 'day'>>(sDt, {year, month, day});
+    return {...sDt, year, month, day};
 };
 
 const subtractHours = (value: number) => (sDt: SimplyDate): SimplyDate => {
@@ -159,7 +160,7 @@ const subtractHours = (value: number) => (sDt: SimplyDate): SimplyDate => {
         }
     }
 
-    return Object.assign<SimplyDate, Pick<SimplyDate, 'hour'>>(sDt, {hour});
+    return {...sDt, hour};
 };
 
 const subtractMinutes = (value: number) => (sDt: SimplyDate): SimplyDate => {
@@ -185,7 +186,7 @@ const subtractMinutes = (value: number) => (sDt: SimplyDate): SimplyDate => {
         }
     }
 
-    return Object.assign<SimplyDate, Pick<SimplyDate, 'minute'>>(sDt, {minute});
+    return {...sDt, minute};
 };
 
 const subtractSeconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
@@ -211,7 +212,7 @@ const subtractSeconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
         }
     }
 
-    return Object.assign<SimplyDate, Pick<SimplyDate, 'second'>>(sDt, {second});
+    return {...sDt, second};
 };
 
 const subtractMilliseconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
@@ -237,7 +238,7 @@ const subtractMilliseconds = (value: number) => (sDt: SimplyDate): SimplyDate =>
         }
     }
 
-    return Object.assign<SimplyDate, Pick<SimplyDate, 'millisecond'>>(sDt, {millisecond});
+    return {...sDt, millisecond};
 };
 
 // &&&&&&& //subtraction
@@ -252,7 +253,7 @@ const addYears = (value: number) => (sDt: SimplyDate): SimplyDate => {
         return subtractYears(value)(sDt);
     }
 
-    return Object.assign<SimplyDate, Pick<SimplyDate, 'year'>>(sDt, {year: sDt.year + value});
+    return {...sDt, year: sDt.year + value};
 };
 
 const addMonths = (value: number) => (sDt: SimplyDate): SimplyDate => {
@@ -270,7 +271,7 @@ const addMonths = (value: number) => (sDt: SimplyDate): SimplyDate => {
     const yearsToAdd = (sumOfMonths % 12) === 0 ? (sumOfMonths / 12) - 1 : ~~(sumOfMonths / 12);
 
     const {year} = addYears(yearsToAdd)(sDt);
-    return Object.assign<SimplyDate, Pick<SimplyDate, 'year' | 'month'>>(sDt, {year, month: mod === 0 ? 12 : mod});
+    return {...sDt, year, month: mod === 0 ? 12 : mod};
 };
 
 const addDays = (value: number) => (sDt: SimplyDate): SimplyDate => {
@@ -296,7 +297,7 @@ const addDays = (value: number) => (sDt: SimplyDate): SimplyDate => {
         }
     }
 
-    return Object.assign<SimplyDate, Pick<SimplyDate, 'day'>>(sDt, {day});
+    return {...sDt, day};
 };
 
 const addHours = (value: number) => (sDt: SimplyDate): SimplyDate => {
@@ -321,7 +322,7 @@ const addHours = (value: number) => (sDt: SimplyDate): SimplyDate => {
         }
     }
 
-    return Object.assign<SimplyDate, Pick<SimplyDate, 'hour'>>(sDt, {hour});
+    return {...sDt, hour};
 };
 
 const addMinutes = (value: number) => (sDt: SimplyDate): SimplyDate => {
@@ -345,7 +346,7 @@ const addMinutes = (value: number) => (sDt: SimplyDate): SimplyDate => {
         }
     }
 
-    return Object.assign<SimplyDate, Pick<SimplyDate, 'minute'>>(sDt, {minute});
+    return {...sDt, minute};
 };
 
 const addSeconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
@@ -370,7 +371,7 @@ const addSeconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
         }
     }
 
-    return Object.assign<SimplyDate, Pick<SimplyDate, 'second'>>(sDt, {second});
+    return {...sDt, second};
 };
 
 const addMilliseconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
@@ -395,7 +396,7 @@ const addMilliseconds = (value: number) => (sDt: SimplyDate): SimplyDate => {
         }
     }
 
-    return Object.assign<SimplyDate, Pick<SimplyDate, 'millisecond'>>(sDt, {millisecond});
+    return {...sDt, millisecond};
 };
 
 // &&&&&&& // addition
