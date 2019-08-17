@@ -68,7 +68,6 @@ const subtractYears = (value: number) => (sDt: SimplyDate): SimplyDate => {
     return Object.assign<SimplyDate, Pick<SimplyDate, 'year' | 'day'>>(sDt, {year: sDt.year - value, day});
 };
 
-
 /**
  * Subtracts months from the current month value. If the value is negative then an addition operation is run.
  * @param {number} value
