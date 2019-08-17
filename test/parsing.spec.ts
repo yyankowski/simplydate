@@ -15,10 +15,12 @@ describe('parsing.spec.ts parsing strings should', () => {
 
     it('2.0 after parsing from milliseconds since the Epoch, should provide the expected time unit values', () => {
         const sDt = Simply.from.msSinceEpoch(1515035460000);
+        const date = new Date(1515035460000);
+
         expect(sDt.year).to.equal(2018, 'year');
         expect(sDt.month).to.equal(1, 'month');
         expect(sDt.day).to.equal(4, 'day');
-        expect(sDt.hour).to.equal(4, 'hour');
+        expect(sDt.hour).to.equal(date.getHours(), 'hour');
         expect(sDt.minute).to.equal(11, 'minute');
     });
 
@@ -29,12 +31,10 @@ describe('parsing.spec.ts parsing strings should', () => {
         const dt = new Date(1536915843455);
         expect(dt.getTime()).to.equal(fromUnixEpoch);
         const sDt = Simply.from.msSinceEpoch(fromUnixEpoch);
-        // const offsetHours = dt.getTimezoneOffset();
-        // expect(offsetHours).to.equal(120);
         expect(sDt.millisecond).to.equal(455);
         expect(sDt.second).to.equal(3);
         expect(sDt.minute).to.equal(4);
-        expect(sDt.hour).to.equal(11); // we are looking at the local computer time in this case
+        expect(sDt.hour).to.equal(dt.getHours(), 'hour'); // we are looking at the local computer time in this case
         expect(sDt.day).to.equal(14);
         expect(sDt.month).to.equal(9); // javascript month starts from 0, SimplyDate from 1
         expect(sDt.year).to.equal(2018);
