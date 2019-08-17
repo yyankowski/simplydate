@@ -263,7 +263,7 @@ const addMonths = (value: number) => (sDt: SimplyDate): SimplyDate => {
     const mod = (sDt.month + value) % 12;
 
     if (sumOfMonths <= 12) {
-        return Object.assign<SimplyDate, Pick<SimplyDate, 'month'>>(sDt, {month: sumOfMonths});
+        return {...sDt, month: sumOfMonths};
     }
 
     const yearsToAdd = (sumOfMonths % 12) === 0 ? (sumOfMonths / 12) - 1 : ~~(sumOfMonths / 12);
@@ -568,7 +568,7 @@ export namespace Simply {
     });
 
     export const format = (sDt: SimplyDate) => ({
-        as: (_format: string) => {
+        as: (_format: string): string => {
             const formatFn = simplyDateToStringByFormatMap[_format];
             if (formatFn) {
                 return formatFn(sDt);
