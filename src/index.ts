@@ -6,7 +6,7 @@ class Localization {
 }
 // &&&& // Localizations
 
-type SimplyDateInternal = {
+export type SimplyDate = Readonly<{
     year: number,
     month: number,
     day: number,
@@ -14,9 +14,7 @@ type SimplyDateInternal = {
     minute: number,
     second: number,
     millisecond: number
-};
-
-export type SimplyDate = Readonly<SimplyDateInternal>;
+}>;
 
 // &&&& utilities
 const isLeapYear = (year: number): boolean => {
