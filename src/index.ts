@@ -6,7 +6,7 @@ class Localization {
 }
 // &&&& // Localizations
 
-export type SimplyDate = {
+export type SimplyDate = Readonly<{
     year: number,
     month: number,
     day: number,
@@ -14,7 +14,7 @@ export type SimplyDate = {
     minute: number,
     second: number,
     millisecond: number
-};
+}>;
 
 // &&&& utilities
 const isLeapYear = (year: number): boolean => {
@@ -50,9 +50,22 @@ const determineLastDayOfMonth = (year: number, month: number, day: number): numb
 // &&&& // utilities
 
 // &&&&&&& subtraction
-const subtractYears = (value: number) => (sDt: SimplyDate): SimplyDate => ({
-    ...sDt, year: sDt.year - value
-});
+
+const subtractYears = (value: number) => (sDt: SimplyDate): SimplyDate => {
+
+    let day = sDt.day;
+    const year = sDt.year - value;
+    // if we are in the zone of days that may be bigger that the total days in the given month
+    // then take the last day of the given month
+    if(day > 28) {
+        const lastDay = getTotalNumberOfDaysInMonth(year, sDt.month);
+        if(day > lastDay) {
+            day = lastDay;
+        }
+    }
+
+    return {...sDt, year: sDt.year - value, day};
+};
 
 /**
  * Subtracts months from the current month value. If the value is negative then an addition operation is run.
@@ -238,9 +251,7 @@ const addYears = (value: number) => (sDt: SimplyDate): SimplyDate => {
         return subtractYears(value)(sDt);
     }
 
-    return {
-        ...sDt, year: sDt.year + value
-    };
+    return {...sDt, year: sDt.year + value};
 };
 
 const addMonths = (value: number) => (sDt: SimplyDate): SimplyDate => {
@@ -252,7 +263,7 @@ const addMonths = (value: number) => (sDt: SimplyDate): SimplyDate => {
     const mod = (sDt.month + value) % 12;
 
     if (sumOfMonths <= 12) {
-        return Object.assign({...sDt}, {month: sumOfMonths});
+        return Object.assign<SimplyDate, Pick<SimplyDate, 'month'>>(sDt, {month: sumOfMonths});
     }
 
     const yearsToAdd = (sumOfMonths % 12) === 0 ? (sumOfMonths / 12) - 1 : ~~(sumOfMonths / 12);
