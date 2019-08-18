@@ -57,10 +57,9 @@ const subtractYears = (value: number) => (sDt: SimplyDate): SimplyDate => {
     const year = sDt.year - value;
     // if we are in the zone of days that may be bigger that the total days in the given month
     // then take the last day of the given month
-    if(day > 28) {
-        const lastDay = getTotalNumberOfDaysInMonth(year, sDt.month);
-        if(day > lastDay) {
-            day = lastDay;
+    if(day > 28 && sDt.month === 2) {
+        if(isLeapYear(sDt.year) && !isLeapYear(year)){
+            day = 28;
         }
     }
 
@@ -251,7 +250,15 @@ const addYears = (value: number) => (sDt: SimplyDate): SimplyDate => {
         return subtractYears(value)(sDt);
     }
 
-    return {...sDt, year: sDt.year + value};
+    let day = sDt.day;
+    const year = sDt.year + value;
+    if(sDt.month === 2 && day > 28) {
+        if(isLeapYear(sDt.year) && !isLeapYear(year)){
+            day = 28;
+        }
+    }
+
+    return {...sDt, year, day};
 };
 
 const addMonths = (value: number) => (sDt: SimplyDate): SimplyDate => {
