@@ -32,3 +32,7 @@ Output to string
 Simply.format(sDt).as("YYYY-MM-DDTHH:mm:ss") === "2017-03-01T03:24:00"
 Simply.format(sDt).as("YYYY-MM-DD") === "2017-03-01"
 ```
+Get milliseconds since Unix Epoch till now.
+```
+Simply.to.msSinceEpoch(Simply.now())
+```
