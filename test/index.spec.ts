@@ -94,7 +94,7 @@ describe('SimplyDate library unit-tests', () => {
 
 	describe('3.0 operations with Unix Epoch', () => {
 		it('should correctly convert date', () => {
-			expect(Simply.to.msSinceEpoch(Simply.from.string('2017-03-29T13:24:11')))
+			expect(Simply.to.msSinceEpoch(Simply.from.string('2017-03-29T13:24:11'), -120))
 				.to.equal(1490786651000);
 		});
 	});

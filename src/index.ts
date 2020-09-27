@@ -654,14 +654,19 @@ const toDate = (sDt: Readonly<SimplyDate>): Date => {
 export namespace Simply {
 
     /**
-     * Returns the number of milliseconds in a SimplyDate object since January 1, 1970, 00:00:00, universal time.
-     * Equivalent to getTime of the JavaScript Date object.
-     * @param {SimplyDate} sDt
-     * @returns {number}
-     */
-    const toMsSinceEpoch = (sDt: Readonly<SimplyDate>): number => {
-    	const dt = new Date();
-    	const _sdt = Simply.add(dt.getTimezoneOffset()).minutes.to(sDt);
+	 * Returns the number of milliseconds in a SimplyDate object since January 1, 1970, 00:00:00, universal time.
+	 * Equivalent to getTime of the JavaScript Date object.
+	 * @param {SimplyDate} sDt
+	 * @param timezoneOffsetMinutes number (optional)
+	 * @returns {number}
+	 */
+    const toMsSinceEpoch = (sDt: Readonly<SimplyDate>, timezoneOffsetMinutes?: number): number => {
+    	if(timezoneOffsetMinutes == null) {
+    		const dt = new Date();
+    		timezoneOffsetMinutes = dt.getTimezoneOffset();
+    	}
+
+    	const _sdt = Simply.add(timezoneOffsetMinutes).minutes.to(sDt);
     	return Date.UTC(_sdt.year, _sdt.month - 1, _sdt.day, _sdt.hour, _sdt.minute, _sdt.second, _sdt.millisecond);
     };
 
