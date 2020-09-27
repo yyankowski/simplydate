@@ -4,13 +4,22 @@ It doesn't support time zones and is useful if you need basic and simple date fo
 The library is a personal project and not ready for production! 
 Use at your own risk.
 
-Usage:
+Installation:
+
+NPM
 ```
 npm install --save simplydate
 ```
 
+Yarn
+```
+yarn add simplydate
+```
+
+##Usage Examples:
+
 ````
-import {Simply} from "simplydate/dist"
+import {Simply} from "simplydate"
 ````
 
 ```
