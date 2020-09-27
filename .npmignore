@@ -1,8 +1,12 @@
 # Created by .ignore support plugin (hsz.mobi)
 src
+test
+tmp
 .idea
 tsconfig.json
-tslint.json
-tmp
-test
+.eslintrc.js
+.eslintignore
 simplydate.iml
+.cache
+.gitignore
+.travis.yml
