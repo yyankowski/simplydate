@@ -16,10 +16,7 @@
     "module": "commonjs",
     "sourceMap": false
   },
-  "exclude": [
-    "./tmp",
-    "./test",
-    "./dist",
-    "./node_modules"
+  "include": [
+    "./src"
   ]
 }
