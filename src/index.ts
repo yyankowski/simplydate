@@ -78,17 +78,6 @@ const isLeapYear = (year: number): boolean => {
 	return year % 4 === 0;
 };
 
-const getTotalNumberOfDaysInMonth = (year: number, month: number): number => {
-	if (month === 2) {
-		return isLeapYear(year) ? 29 : 28;
-	}
-	if ((month === 4 || month === 6 || month === 9 || month === 11)) {
-		return 30;
-	}
-
-	return 31;
-};
-
 const determineLastDayOfMonth = (year: number, month: number, day: number): number => {
 	if (month === 2 && day > 28) {
 		return isLeapYear(year) ? 29 : 28;
