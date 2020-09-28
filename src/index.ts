@@ -78,17 +78,6 @@ const isLeapYear = (year: number): boolean => {
 	return year % 4 === 0;
 };
 
-const getTotalNumberOfDaysInMonth = (year: number, month: number): number => {
-	if (month === 2) {
-		return isLeapYear(year) ? 29 : 28;
-	}
-	if ((month === 4 || month === 6 || month === 9 || month === 11)) {
-		return 30;
-	}
-
-	return 31;
-};
-
 const determineLastDayOfMonth = (year: number, month: number, day: number): number => {
 	if (month === 2 && day > 28) {
 		return isLeapYear(year) ? 29 : 28;
@@ -398,166 +387,24 @@ const addMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => 
 	};
 };
 
-const addDays = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
-	if (value < 0) {
-		return subtractDays(-value)(sDt);
-	}
-
-	let { day } = sDt;
-	const lastDayOfMonth = getTotalNumberOfDaysInMonth(sDt.year, sDt.month);
-
-	const sum = value + day;
-	if (sum <= lastDayOfMonth) {
-		day = sum;
-	} else {
-		const addOneMonth = addMonths(1);
-		while (value--) {
-			day++;
-			if (day > lastDayOfMonth) {
-				day = 1;
-				sDt = addOneMonth(sDt);
-			}
-		}
-	}
-
-	return {
-		year: sDt.year,
-		month: sDt.month,
-		day,
-		hour: sDt.hour,
-		minute: sDt.minute,
-		second: sDt.second,
-		millisecond: sDt.millisecond,
-	};
-};
-
-const addHours = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
-	if (value < 0) {
-		return subtractHours(-value)(sDt);
-	}
-
-	let { hour } = sDt;
-	const sum = hour + value;
-
-	if (sum < 24) {
-		hour = sum;
-	} else {
-		const addOneDay = addDays(1);
-		while (value--) {
-			hour++;
-			if (hour === 24) {
-				hour = 0;
-				sDt = addOneDay(sDt);
-			}
-		}
-	}
-
-	return {
-		year: sDt.year,
-		month: sDt.month,
-		day: sDt.day,
-		hour,
-		minute: sDt.minute,
-		second: sDt.second,
-		millisecond: sDt.millisecond,
-	};
-};
-
-const addMinutes = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
-	if (value < 0) {
-		return subtractMinutes(-value)(sDt);
-	}
-
-	let { minute } = sDt;
-	const sum = minute + value;
-	if (sum < 60) {
-		minute = sum;
-	} else {
-		const addOneHour = addHours(1);
-		while (value--) {
-			minute++;
-			if (minute === 60) {
-				minute = 0;
-				sDt = addOneHour(sDt);
-			}
-		}
-	}
-
-	return {
-		year: sDt.year,
-		month: sDt.month,
-		day: sDt.day,
-		hour: sDt.hour,
-		minute,
-		second: sDt.second,
-		millisecond: sDt.millisecond,
-	};
-};
-
-const addSeconds = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
-	if (value < 0) {
-		return subtractSeconds(-value)(sDt);
-	}
-
-	let { second } = sDt;
-	const sum = value + second;
-
-	if (sum < 60) {
-		second = sum;
-	} else {
-		const addOneMinute = addMinutes(1);
-		while (value--) {
-			second++;
-			if (second === 60) {
-				second = 0;
-				sDt = addOneMinute(sDt);
-			}
-		}
-	}
-
-	return {
-		year: sDt.year,
-		month: sDt.month,
-		day: sDt.day,
-		hour: sDt.hour,
-		minute: sDt.minute,
-		second,
-		millisecond: sDt.millisecond,
-	};
-};
+const addDays = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate =>
+	addMilliseconds(value * 86400000)(sDt);
 
 const addMilliseconds = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
-	if (value < 0) {
-		return subtractMilliseconds(-value)(sDt);
-	}
+	const curMs = new Date(sDt.year, sDt.month - 1, sDt.day, sDt.hour, sDt.minute, sDt.second, sDt.millisecond)
+		.getTime();
 
-	let { millisecond } = sDt;
-	const sum = value + millisecond;
-
-	if (sum < 1000) {
-		millisecond = sum;
-	} else {
-		const addOneSecond = addSeconds(1);
-		while (value--) {
-			millisecond++;
-			if (millisecond === 1000) {
-				millisecond = 0;
-				sDt = addOneSecond(sDt);
-			}
-		}
-	}
-
-	return {
-		year: sDt.year,
-		month: sDt.month,
-		day: sDt.day,
-		hour: sDt.hour,
-		minute: sDt.minute,
-		second: sDt.second,
-		millisecond,
-	};
+	return fromMsSinceEpoch(curMs + value);
 };
 
+const addSeconds = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate =>
+	addMilliseconds(value * 1000)(sDt);
+
+const addMinutes = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate =>
+	addMilliseconds( value * 60000)(sDt);
+
+const addHours = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate =>
+	addMilliseconds(value * 3600000)(sDt);
 // &&&&&&& // addition
 
 const DATETIME_LOCAL = 'YYYY-MM-DDTHH:mm';
