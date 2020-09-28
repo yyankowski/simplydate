@@ -157,179 +157,6 @@ const subtractMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDat
 	};
 };
 
-const subtractDays = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
-	if (value < 0) {
-		return addDays(-value)(sDt);
-	}
-
-	let year = sDt.year;
-	let month = sDt.month;
-	let day = sDt.day;
-
-	const diff = day - value;
-
-	// if we are still in the same month
-	if (diff > 0) {
-		day = diff;
-	} else {
-		while (value--) {
-			day--;
-			if (day === 0) {
-				day = 31;
-				month--;
-				if (month === 0) {
-					month = 12;
-					year--;
-				}
-
-				day = determineLastDayOfMonth(year, month, day);
-			}
-		}
-	}
-
-	return {
-		year,
-		month,
-		day,
-		hour: sDt.hour,
-		minute: sDt.minute,
-		second: sDt.second,
-		millisecond: sDt.millisecond,
-	};
-};
-
-const subtractHours = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
-	if (value < 0) {
-		return addHours(-value)(sDt);
-	}
-
-	let hour = sDt.hour;
-	const diff = hour - value;
-
-	// if we are still in the same day
-	if (diff > -1) {
-		hour = diff;
-	} else {
-		const subtractOneDay = subtractDays(1);
-		while (value--) {
-			hour--;
-			if (hour === -1) {
-				hour = 23;
-				sDt = subtractOneDay(sDt);
-			}
-		}
-	}
-
-	return {
-		year: sDt.year,
-		month: sDt.month,
-		day: sDt.day,
-		hour,
-		minute: sDt.minute,
-		second: sDt.second,
-		millisecond: sDt.millisecond,
-	};
-};
-
-const subtractMinutes = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
-	if (value < 0) {
-		return addMinutes(-value)(sDt);
-	}
-
-	let minute = sDt.minute;
-
-	const diff = minute - value;
-
-	if (diff > -1) {
-		minute = diff;
-	} else {
-		const subtractOneHour = subtractHours(1);
-		while (value--) {
-			minute--;
-			if (minute === -1) {
-				minute = 59;
-				sDt = subtractOneHour(sDt);
-			}
-		}
-	}
-
-	return {
-		year: sDt.year,
-		month: sDt.month,
-		day: sDt.day,
-		hour: sDt.hour,
-		minute,
-		second: sDt.second,
-		millisecond: sDt.millisecond,
-	};
-};
-
-const subtractSeconds = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
-	if (value < 0) {
-		return addSeconds(-value)(sDt);
-	}
-
-	let { second } = sDt;
-
-	const diff = second - value;
-
-	if (diff > -1) {
-		second = diff;
-	} else {
-		const subtractOneMinute = subtractMinutes(1);
-		while (value--) {
-			second--;
-			if (second === -1) {
-				second = 59;
-				sDt = subtractOneMinute(sDt);
-			}
-		}
-	}
-
-	return {
-		year: sDt.year,
-		month: sDt.month,
-		day: sDt.day,
-		hour: sDt.hour,
-		minute: sDt.minute,
-		second,
-		millisecond: sDt.second,
-	};
-};
-
-const subtractMilliseconds = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
-	if (value < 0) {
-		return addMilliseconds(-value)(sDt);
-	}
-
-	let { millisecond } = sDt;
-
-	const diff = millisecond - value;
-
-	if (diff > -1) {
-		millisecond = diff;
-	} else {
-		const subtractOneSecond = subtractSeconds(1);
-		while (value--) {
-			millisecond--;
-			if (millisecond === -1) {
-				millisecond = 999;
-				sDt = subtractOneSecond(sDt);
-			}
-		}
-	}
-
-	return {
-		year: sDt.year,
-		month: sDt.month,
-		day: sDt.day,
-		hour: sDt.hour,
-		minute: sDt.minute,
-		second: sDt.second,
-		millisecond,
-	};
-};
-
 // &&&&&&& //subtraction
 
 // &&&&&&& addition
@@ -564,19 +391,19 @@ export namespace Simply {
     		from: subtractMonths(value),
     	},
     	days: {
-    		from: subtractDays(value),
+    		from: addDays(-value),
     	},
     	hours: {
-    		from: subtractHours(value),
+    		from: addHours(-value),
     	},
     	minutes: {
-    		from: subtractMinutes(value),
+    		from: addMinutes(-value),
     	},
     	seconds: {
-    		from: subtractSeconds(value),
+    		from: addSeconds(-value),
     	},
     	milliseconds: {
-    		from: subtractMilliseconds(value),
+    		from: addMilliseconds(-value),
     	},
     });
 
