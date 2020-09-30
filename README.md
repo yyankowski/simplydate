@@ -60,8 +60,9 @@ const newSimpleDate2 = Simply.subtract(12).months.from(simpleDate);
 ```
 Output to string
 ```
-Simply.format(sDt).as("YYYY-MM-DDTHH:mm:ss") === "2017-03-01T03:24:00"
-Simply.format(sDt).as("YYYY-MM-DD") === "2017-03-01"
+const simpleDate = Simply.from.date(new Date(`2017-03-01T03:24:00`));
+Simply.format(simpleDate).as("YYYY-MM-DDTHH:mm:ss") === "2017-03-01T03:24:00"
+Simply.format(simpleDate).as("YYYY-MM-DD") === "2017-03-01"
 ```
 
 Supported formats:
