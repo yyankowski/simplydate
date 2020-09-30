@@ -16,7 +16,7 @@ Yarn
 yarn add simplydate
 ```
 
-##Usage Examples:
+### Usage Examples:
 
 ````
 import {Simply} from "simplydate"
