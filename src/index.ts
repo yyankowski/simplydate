@@ -197,7 +197,15 @@ const addMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => 
 	const mod = (sDt.month + value) % 12;
 
 	if (sumOfMonths <= 12) {
-		return { ...sDt, month: sumOfMonths };
+		return {
+			year: sDt.year,
+			month: sumOfMonths,
+			day: sDt.day,
+			hour: sDt.hour,
+			minute: sDt.minute,
+			second: sDt.second,
+			millisecond: sDt.millisecond,
+		};
 	}
 
 	const yearsToAdd = (sumOfMonths % 12) === 0 ? (sumOfMonths / 12) - 1 : ~~(sumOfMonths / 12);
