@@ -22,12 +22,19 @@ describe('3.2 month subtraction logic should', () => {
 
 	it('3.2.5 correctly subtract month of a regular year', () => {
 		sDt = Simply.from.date(new Date('2017-03-29T03:24:00'));
+		expect(Simply.subtract(1).months.from(sDt).month).to.equal(2);
 		expect(Simply.subtract(1).months.from(sDt).day).to.equal(28);
 	});
 
 	it('3.2.6 correctly subtract month by a negative value', () => {
 		sDt = Simply.from.date(new Date('2017-03-29T03:24:00'));
 		expect(Simply.subtract(-1).months.from(sDt).month).to.equal(4);
+	});
+
+	it('3.2.7 correctly subtract month by a positive value', () => {
+		sDt = Simply.from.date(new Date('2017-03-15T03:24:00'));
+		expect(Simply.subtract(1).months.from(sDt).month).to.equal(2);
+		expect(Simply.subtract(1).months.from(sDt).day).to.equal(15);
 	});
 
 	describe('1.10 when a month value overflows 12', () => {
