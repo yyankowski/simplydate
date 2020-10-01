@@ -35,9 +35,11 @@ type SimplyDate = {
 }
 ```
 
-Initialize:
+Ways to initialize:
 ```
 const simpleDate = Simply.from.date(new Date(`2015-02-29T03:24:00`));
+const simpleDateFromMs = Simply.from.msSinceEpoch(1515035460000);
+const simpleDateFromString = Simply.from.string('12-25-1995', 'MM-DD-YYYY');
 const nowDate = Simply.now();
 ```
 
