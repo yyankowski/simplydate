@@ -78,11 +78,12 @@ const isLeapYear = (year: number): boolean => {
 	return year % 4 === 0;
 };
 
-const determineLastDayOfMonth = (year: number, month: number, day: number): number => {
-	if ((month === 4 || month === 6 || month === 9) && day > 30) {
+const determineLastDayOfMonth = (year: number, month: number): number => {
+	if ((month === 4 || month === 6 || month === 9)) {
 		return 30;
 	}
-	if (month === 2 && day > 28) {
+
+	if (month === 2) {
 		return isLeapYear(year) ? 29 : 28;
 	}
 
@@ -146,9 +147,11 @@ const  subtractMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDa
 	}
 
 	if(day > 28) {
-		const lastMonthDay = determineLastDayOfMonth(year, month, day);
-		if(day > lastMonthDay){
-			day = lastMonthDay;
+		const lastMonthDay = determineLastDayOfMonth(year, month);
+		const diff = day - lastMonthDay;
+		if(diff > 0){
+			month += 1;
+			day = diff;
 		}
 	}
 
@@ -199,33 +202,55 @@ const addMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => 
 		return subtractMonths(-value)(sDt);
 	}
 
-	const sumOfMonths = sDt.month + value;
-	const mod = (sDt.month + value) % 12;
+	let sumOfMonths = sDt.month + value;
 
+	// if we're still within the same year
 	if (sumOfMonths <= 12) {
+		let day = sDt.day;
+		if(day > 28) {
+			const lastDayOfMonth = determineLastDayOfMonth(sDt.year, sumOfMonths);
+			if(day > lastDayOfMonth) {
+				sumOfMonths += 1;
+				const diff = day - lastDayOfMonth;
+				day = diff;
+			}
+		}
+
 		return {
 			year: sDt.year,
 			month: sumOfMonths,
-			day: sDt.day,
+			day: day,
 			hour: sDt.hour,
 			minute: sDt.minute,
 			second: sDt.second,
 			millisecond: sDt.millisecond,
 		};
 	}
+	else {
+		const mod = sumOfMonths % 12;
+		const yearsToAdd = mod === 0 ? (sumOfMonths / 12) - 1 : ~~(sumOfMonths / 12);
+		const { year } = addYears(yearsToAdd)(sDt);
+		let month = mod === 0 ? 12 : mod;
+		let day = sDt.day;
+		if( day > 28) {
+			const lastDayOfMonth = determineLastDayOfMonth(year, month);
+			if(day > lastDayOfMonth) {
+				month += 1;
+				const diff = day - lastDayOfMonth;
+				day = diff;
+			}
+		}
 
-	const yearsToAdd = (sumOfMonths % 12) === 0 ? (sumOfMonths / 12) - 1 : ~~(sumOfMonths / 12);
-
-	const { year } = addYears(yearsToAdd)(sDt);
-	return {
-		year,
-		month: mod === 0 ? 12 : mod,
-		day: sDt.day,
-		hour: sDt.hour,
-		minute: sDt.minute,
-		second: sDt.second,
-		millisecond: sDt.millisecond,
-	};
+		return {
+			year,
+			month,
+			day,
+			hour: sDt.hour,
+			minute: sDt.minute,
+			second: sDt.second,
+			millisecond: sDt.millisecond,
+		};
+	}
 };
 
 const addDays = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate =>
