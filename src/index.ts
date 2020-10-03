@@ -96,19 +96,21 @@ const determineLastDayOfMonth = (year: number, month: number): number => {
 
 const subtractYears = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
 
-	let day = sDt.day;
+	let { day, month } = sDt;
 	const year = sDt.year - value;
-	// if we are in the zone of days that may be bigger that the total days in the given month
-	// then take the last day of the given month
+
+	// when the source year is a leap year and the target is not
+	// i.e. February 29, 2020 minus 1 year should equal March 1, 2019
 	if (day > 28 && sDt.month === 2) {
 		if (isLeapYear(sDt.year) && !isLeapYear(year)) {
-			day = 28;
+			day = 1;
+			month = 3;
 		}
 	}
 
 	return {
 		year: sDt.year - value,
-		month: sDt.month,
+		month,
 		day,
 		hour: sDt.hour,
 		minute: sDt.minute,
@@ -122,7 +124,7 @@ const subtractYears = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate
  * @param {number} value
  * @returns {(sDt: SimplyDate) => SimplyDate}
  */
-const  subtractMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
+const subtractMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
 	if (value < 0) {
 		return addMonths(-value)(sDt);
 	}
@@ -178,17 +180,19 @@ const addYears = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
 		return subtractYears(value)(sDt);
 	}
 
-	let day = sDt.day;
+	let { day, month } = sDt;
 	const year = sDt.year + value;
-	if (sDt.month === 2 && day > 28) {
+	// special case from leap to a normal year
+	if (sDt.month === 2 && sDt.day > 28) {
 		if (isLeapYear(sDt.year) && !isLeapYear(year)) {
-			day = 28;
+			day = 1;
+			month = 3;
 		}
 	}
 
 	return {
 		year,
-		month: sDt.month,
+		month,
 		day,
 		hour: sDt.hour,
 		minute: sDt.minute,
