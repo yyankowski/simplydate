@@ -1,6 +1,6 @@
 {
   "name": "simplydate",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Simple date-time manipulation.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,7 +10,7 @@
     "dist": "npm run lint && npm run test && npm run _compile",
     "_tsc": "./node_modules/typescript/bin/tsc -p tsconfig.json",
     "_compile": "npm run clean && npm run _tsc",
-    "test": "mocha -r ts-node/register ./test/index.spec.ts",
+    "test": "mocha -r ts-node/register ./test/*.spec.ts",
     "lint": "eslint --ext ts",
     "minify-src": "./node_modules/uglify-js/bin/uglifyjs ./tmp/*.js -o ./dist/simply.min.js --source-map --screw-ie8 -c -m",
     "prepare": "npm run dist",

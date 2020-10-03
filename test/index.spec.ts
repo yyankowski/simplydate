@@ -1,12 +1,5 @@
 import { expect } from 'chai';
 import { Simply, SimplyDate } from '../src';
-import './parsing.spec';
-import './minutes.spec';
-import './seconds.spec';
-import './years.spec';
-import './days.spec';
-import './hours.spec';
-import './milliseconds.spec';
 
 describe('SimplyDate library unit-tests', () => {
 	let sDt: SimplyDate;

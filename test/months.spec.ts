@@ -21,13 +21,22 @@ describe('3.2 month subtraction logic should', () => {
 	});
 
 	it('3.2.5 correctly subtract month of a regular year', () => {
-		sDt = Simply.from.date(new Date('2017-03-29T03:24:00'));
-		expect(Simply.subtract(1).months.from(sDt).day).to.equal(28);
+		sDt = Simply.from.string('2017-03-29T03:24:00');
+		const { month, day, year } = Simply.subtract(1).months.from(sDt);
+		expect(year).to.equal(2017);
+		expect(month).to.equal(3);
+		expect(day).to.equal(1);
 	});
 
 	it('3.2.6 correctly subtract month by a negative value', () => {
 		sDt = Simply.from.date(new Date('2017-03-29T03:24:00'));
 		expect(Simply.subtract(-1).months.from(sDt).month).to.equal(4);
+	});
+
+	it('3.2.7 correctly subtract month by a positive value', () => {
+		sDt = Simply.from.date(new Date('2017-03-15T03:24:00'));
+		expect(Simply.subtract(1).months.from(sDt).month).to.equal(2);
+		expect(Simply.subtract(1).months.from(sDt).day).to.equal(15);
 	});
 
 	describe('1.10 when a month value overflows 12', () => {
@@ -73,6 +82,43 @@ describe('3.2 month subtraction logic should', () => {
 		it('2.2 the date should be correctly incremented.', () => {
 			sDt = Simply.from.date(new Date('2015-02-29T03:24:00'));
 			expect(Simply.add(12).months.to(sDt).day).to.equal(1);
+		});
+	});
+
+	describe('4.0 Edge cases with last month days not being similar', () => {
+		it('4.1 the month should be correctly incremented.', () => {
+			// May in 2017 has 31 days, whereas June 2017 has only 30
+			const sDt = Simply.from.string('2017-05-31T03:24:00');
+			const { month, day } = Simply.add(1).months.to(sDt);
+			expect(month).to.equal(7);
+			expect(day).to.equal(1);
+		});
+
+		it('4.2 the month should be correctly incremented.', () => {
+			// May in 2017 has 31 days, whereas June 2018 has only 30
+			const sDt = Simply.from.string('2017-05-31T03:24:00');
+			const { year, month, day } =  Simply.add(13).months.to(sDt);
+			expect(year).to.equal(2018);
+			expect(month).to.equal(7);
+			expect(day).to.equal(1);
+		});
+
+		it('4.3 the month should be correctly decremented.', () => {
+			// May in 2017 has 31 days, whereas June 2018 has only 30
+			const sDt = Simply.from.string('2017-07-31T03:24:00');
+			const { year, month, day } = Simply.subtract(1).months.from(sDt);
+			expect(year).to.equal(2017);
+			expect(month).to.equal(7);
+			expect(day).to.equal(1);
+		});
+
+		it('4.4 correctly subtract month by a negative value', () => {
+			// March in 2018 has 31 days, April only 30.
+			const sDt = Simply.from.string('2018-03-31');
+			const { year, month, day } = Simply.subtract(-1).months.from(sDt);
+			expect(year).to.equal(2018);
+			expect(month).to.equal(5);
+			expect(day).to.equal(1);
 		});
 	});
 });
