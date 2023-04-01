@@ -406,7 +406,7 @@ export namespace Simply {
     		from: subtractMonths(value),
     	},
     	days: {
-    		from: addDays(value > 0?-value:value),
+    		from: addDays(value === 0?value:-value),
     	},
     	hours: {
     		from: addHours(-value),
