@@ -125,47 +125,9 @@ const subtractYears = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate
  * @returns {(sDt: SimplyDate) => SimplyDate}
  */
 const subtractMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
-	if (value < 0) {
-		return addMonths(-value)(sDt);
-	}
-
-	const diff = sDt.month - value;
-
-	let year = sDt.year;
-	let month = sDt.month;
-	let day = sDt.day;
-	// if we are still in the same year
-	if (diff > 0) {
-		month = diff;
-	} else {
-		while (value--) {
-			month--;
-			if (month === 0) {
-				month = 12;
-				year--;
-			}
-		}
-
-	}
-
-	if(day > 28) {
-		const lastMonthDay = determineLastDayOfMonth(year, month);
-		const diff = day - lastMonthDay;
-		if(diff > 0){
-			month += 1;
-			day = diff;
-		}
-	}
-
-	return {
-		year,
-		month,
-		day,
-		hour: sDt.hour,
-		minute: sDt.minute,
-		second: sDt.second,
-		millisecond: sDt.millisecond,
-	};
+      const newDate = new Date(d.getTime());
+      newDate.setUTCMonth(newDate.getUTCMonth() - n);
+      return Simply.from.date(newDate);
 };
 
 // &&&&&&& //subtraction
