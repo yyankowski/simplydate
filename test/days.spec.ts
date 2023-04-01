@@ -15,6 +15,10 @@ describe('days.spec.ts ', () => {
 		it('1.2 correctly subtract a negative value', () => {
 			expect(Simply.subtract(-1).days.from(sDt).day).to.equal(2);
 		});
+		
+		it('1.3 correctly subtract a zero value', () => {
+			expect(Simply.subtract(0).days.from(sDt).day).to.equal(1);
+		});
 	});
 
 	describe('2.0 addition test cases ', () => {
