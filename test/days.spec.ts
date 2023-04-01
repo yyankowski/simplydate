@@ -17,7 +17,7 @@ describe('days.spec.ts ', () => {
 		});
 		
 		it('1.3 correctly subtract a zero value', () => {
-			expect(Simply.subtract(0).days.from(sDt).day).to.equal(28);
+			expect(Simply.subtract(0).days.from(sDt).day).to.equal(1);
 		});
 	});
 
