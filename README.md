@@ -75,12 +75,6 @@ The following date formats are supported:
 'HH:mm:ss' => '13:24:00'
 
 'YY MMM DD h:mm A' => '17 Mar 29 3:24 AM'
-'DD MMM YYYY' => '01 Mar 2017'
-'MMM DD, YYYY' => 'Mar 01, 2017'
-'MMM DD YYYY' => 'Mar 01 2017'
-'YYYY/MM/DD' => '2017/03/01'
-'DD/MM/YYYY' => '01/03/2017'
-'DD.MM.YYYY' => '01.03.2017'
 ```
 
 Get milliseconds since Unix Epoch till now.
