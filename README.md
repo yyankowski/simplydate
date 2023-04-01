@@ -19,8 +19,8 @@ yarn add simplydate
 import {Simply} from "simplydate"
 ````
 
-***Type definition***
-```
+**Type definition**
+```typescript
 type SimplyDate = {
     year: number,
     month: number,
@@ -32,51 +32,51 @@ type SimplyDate = {
 }
 ```
 
-***Ways to initialize:***
-```
+**Ways to initialize:**
+```typescript
 const simpleDate = Simply.from.date(new Date(`2015-02-29T03:24:00`));
 const simpleDateFromMs = Simply.from.msSinceEpoch(1515035460000);
 const simpleDateFromString = Simply.from.string('12-25-1995', 'MM-DD-YYYY');
 const nowDate = Simply.now();
 ```
 
-***Accessing properties:***
-```
+**Accessing properties:**
+```typescript
 console.log(nowDate.day);
 console.log(simpleDate.month);
 ```
 
-***Addition:***
-```
+**Addition:**
+```typescript
 const newSimpleDate1 = Simply.add(2).days.to(simpleDate);
 const newSimpleDate2 = Simply.add(12).months.to(newSimpleDate1);
 
 ```
-***Subtraction:***
-```
+**Subtraction:**
+```typescript
 const newSimpleDate1 = Simply.subtract(10).seconds.from(simpleDate);
 const newSimpleDate2 = Simply.subtract(12).months.from(simpleDate);
 ```
-***Output to string***
-```
+**Output to string**
+```typescript
 const simpleDate = Simply.from.date(new Date(`2017-03-01T03:24:00`));
 Simply.format(simpleDate).as("YYYY-MM-DDTHH:mm:ss") === "2017-03-01T03:24:00"
 Simply.format(simpleDate).as("YYYY-MM-DD") === "2017-03-01"
 ```
-***With timezones***
+**With timezones**
 see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
-```
+```typescript
 const options = {
                 weekday: "long",
                 year: "numeric",
                 month: "long",
                 day: "numeric",
             };
-Simply.format(sDt).as(***{ locale: "de-DE", options }***)) === "Mittwoch, 29. März 2017"          
+Simply.format(sDt).as({ locale: "de-DE", options })) === "Mittwoch, 29. März 2017"          
 ```
 
-***The following date formats are supported:***
-```
+**The following date formats are supported:**
+```typescript
 'YYYY-MM-DDTHH:mm:ss.SSS' => '2017-03-01T03:24:00.000'
 'YYYY-MM-DDTHH:mm:ss' => '2017-03-01T03:24:00'
 'YYYY-MM-DDTHH:mm' => '2017-03-01T03:24'
@@ -88,7 +88,7 @@ Simply.format(sDt).as(***{ locale: "de-DE", options }***)) === "Mittwoch, 29. M�
 'YY MMM DD h:mm A' => '17 Mar 29 3:24 AM'
 ```
 
-***Get milliseconds since Unix Epoch till now.***
-```
+**Get milliseconds since Unix Epoch till now.**
+```typescript
 Simply.to.msSinceEpoch(Simply.now())
 ```
