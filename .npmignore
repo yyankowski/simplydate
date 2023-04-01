@@ -10,3 +10,4 @@ simplydate.iml
 .cache
 .gitignore
 .travis.yml
+.github/workflows
