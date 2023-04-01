@@ -7,19 +7,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Cache Yarn packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - name: Install dependencies
         run: |
-          npm install
+          yarn install
           if [ $? -eq 0 ]
           then
             echo "Install dependencies passed"
           else
-            echo "nstall dependencies"
+            echo "Install dependencies failed"
             exit 1
           fi
       - name: Run tests
         run: |
-          npm test
+          yarn test
           if [ $? -eq 0 ]
           then
             echo "Tests passed"
