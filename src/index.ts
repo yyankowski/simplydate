@@ -431,13 +431,13 @@ const subtract = (value: number) => ({
 type TimeFormatOptions = ConstructorParameters<typeof Intl.DateTimeFormat>;
 
 const format = (sDt: Readonly<SimplyDate>) => ({
-    as: (_format: string | { options: TimeFormatOptions[1], locale: TimeFormatOptions[0] }): string => {
+    as: (_format: string | { locale: TimeFormatOptions[0], options: TimeFormatOptions[1] }): string => {
         if (!_format) {
             return simplyDateToStringByFormatMap[DATETIME_LOCAL](sDt);
         }
 
         if (typeof _format === "object") {
-            const date = new Intl.DateTimeFormat(_format.locale ?? "default");
+            const date = new Intl.DateTimeFormat(_format.locale ?? "default", _format.options);
             return date.format(Simply.to.date(sDt))
         }
 
