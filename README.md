@@ -72,7 +72,7 @@ const options = {
                 month: "long",
                 day: "numeric",
             };
-Simply.format(sDt).as({ locale: "de-DE", options })) === "Mittwoch, 29. März 2017"          
+Simply.format(sDt).as(***{ locale: "de-DE", options }***)) === "Mittwoch, 29. März 2017"          
 ```
 
 ***The following date formats are supported:***
