@@ -86,5 +86,21 @@ describe('years.spec.ts', () => {
 		  expect(month).to.equal(2);
 		  expect(day).to.equal(28);
 		});
+		
+		it('1.7 correctly subtract a zero value', () => {
+			sDt = Simply.from.date(new Date('2017-03-29T03:24:00'));
+			const { year, day, month } = Simply.subtract(0).years.from(sDt);
+			expect(year).to.equal(2017);
+			expect(month).to.equal(3);
+			expect(day).to.equal(29);
+		});
+		
+		it('1.8 correctly add a zero value', () => {
+			sDt = Simply.from.date(new Date('2017-03-29T03:24:00'));
+			const { year, day, month } = Simply.add(0).years.to(sDt);
+			expect(year).to.equal(2017);
+			expect(month).to.equal(3);
+			expect(day).to.equal(29);
+		});
 	});
 });
