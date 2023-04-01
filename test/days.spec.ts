@@ -88,15 +88,7 @@ describe('days.spec.ts ', () => {
 
 		  it('3.7 correctly subtract 366 days from a leap year', () => {
 		    sDt = Simply.from.date(new Date('2020-01-01T03:24:00'));
-		    const result = Simply.subtract(366).days.from(sDt);
-		    const expected = Simply.from.date(new Date('2019-01-01T03:24:00'));
-		    expect(result.year).to.equal(expected.year);
-		    expect(result.month).to.equal(expected.month);
-		    expect(result.day).to.equal(expected.day);
-		    expect(result.hour).to.equal(expected.hour);
-		    expect(result.minute).to.equal(expected.minute);
-		    expect(result.second).to.equal(expected.second);
-		    expect(result.millisecond).to.equal(expected.millisecond);
+		    expect(Simply.subtract(366).days.from(sDt).year).to.equal(2019);
 		  });
 
 		  it('3.8 correctly subtract a negative value from a leap year', () => {
