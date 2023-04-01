@@ -93,7 +93,7 @@ describe('SimplyDate library unit-tests', () => {
             };
 
             sDt = Simply.from.string('2017-03-29T13:24:00');
-            expect(Simply.format(sDt).as({ locale: "de-DE", options })).to.equal("Donnerstag, 03. Mârz 2017");
+            expect(Simply.format(sDt).as({ locale: "de-DE", options })).to.equal("Mittwoch, 29. Mârz 2017");
         });
     });
 
