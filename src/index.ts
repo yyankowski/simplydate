@@ -340,9 +340,9 @@ const fromString = (dt: string, pattern?: string): SimplyDate => {
  * Converts an instance of SimplyDate to Date.
  * @param sDt
  */
-const toDate = (sDt: Readonly<SimplyDate>): Date | null => {
+const toDate = (sDt: Readonly<SimplyDate>): Date | undefined => {
     if (!sDt) {
-        return null;
+        return undefined;
     }
 
     return new Date(sDt.year, sDt.month - 1, sDt.day, sDt.hour, sDt.minute, sDt.second, sDt.millisecond);
@@ -428,8 +428,19 @@ const subtract = (value: number) => ({
     },
 });
 
+type TimeFormatOptions = ConstructorParameters<typeof Intl.DateTimeFormat>;
+
 const format = (sDt: Readonly<SimplyDate>) => ({
-    as: (_format: string): string => {
+    as: (_format: string | { options: TimeFormatOptions[1], locale: TimeFormatOptions[0] }): string => {
+        if (!_format) {
+            return simplyDateToStringByFormatMap[DATETIME_LOCAL](sDt);
+        }
+
+        if (typeof _format === "object") {
+            const date = new Intl.DateTimeFormat(_format.locale ?? "default");
+            return date.format(Simply.to.date(sDt))
+        }
+
         const formatFn = simplyDateToStringByFormatMap[_format];
         if (formatFn) {
             return formatFn(sDt);
