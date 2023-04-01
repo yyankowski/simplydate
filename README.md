@@ -63,7 +63,7 @@ const simpleDate = Simply.from.date(new Date(`2017-03-01T03:24:00`));
 Simply.format(simpleDate).as("YYYY-MM-DDTHH:mm:ss") === "2017-03-01T03:24:00"
 Simply.format(simpleDate).as("YYYY-MM-DD") === "2017-03-01"
 ```
-With timezones:
+With timezones (see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat):
 ```
 const options = {
                 weekday: "long",
