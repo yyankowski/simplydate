@@ -52,6 +52,39 @@ describe('years.spec.ts', () => {
 			expect(month).to.equal(2);
 			expect(day).to.equal(29);
 		});
+		
+		it('1.6 should correctly handle leap years when adding years', () => {
+		  // starting from a leap year
+		  let sDt = Simply.from.date(new Date('2020-02-29T03:24:00'));
+		  // adding 1 year should result in another leap year
+		  let { year, month, day } = Simply.add(1).years.to(sDt);
+		  expect(year).to.equal(2021);
+		  expect(month).to.equal(3);
+		  expect(day).to.equal(1);
 
+		  // starting from a leap year
+		  sDt = Simply.from.date(new Date('2020-02-29T03:24:00'));
+		  // adding 4 years should result in another leap year
+		  ({ year, month, day } = Simply.add(4).years.to(sDt));
+		  expect(year).to.equal(2024);
+		  expect(month).to.equal(2);
+		  expect(day).to.equal(29);
+
+		  // starting from a non-leap year
+		  sDt = Simply.from.date(new Date('2021-02-28T03:24:00'));
+		  // adding 1 year should result in a non-leap year
+		  ({ year, month, day } = Simply.add(1).years.to(sDt));
+		  expect(year).to.equal(2022);
+		  expect(month).to.equal(2);
+		  expect(day).to.equal(28);
+
+		  // starting from a non-leap year
+		  sDt = Simply.from.date(new Date('2021-02-28T03:24:00'));
+		  // adding 4 years should result in a non-leap year
+		  ({ year, month, day } = Simply.add(4).years.to(sDt));
+		  expect(year).to.equal(2025);
+		  expect(month).to.equal(2);
+		  expect(day).to.equal(28);
+		});
 	});
 });
