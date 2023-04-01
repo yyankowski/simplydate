@@ -129,32 +129,19 @@ const subtractMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDat
 		return addMonths(-value)(sDt);
 	}
 
-	const diff = sDt.month - value;
-
-	let year = sDt.year;
-	let month = sDt.month;
-	let day = sDt.day;
+	let { year, month, day } = sDt;
 	// if we are still in the same year
-	if (diff > 0) {
-		month = diff;
+	if (month > value) {
+		month -= value;
 	} else {
-		while (value--) {
-			month--;
-			if (month === 0) {
-				month = 12;
-				year--;
-			}
-		}
-
+		// move to the previous year
+		year--;
+		month += 12 - value;
 	}
 
-	if(day > 28) {
-		const lastMonthDay = determineLastDayOfMonth(year, month);
-		const diff = day - lastMonthDay;
-		if(diff > 0){
-			month += 1;
-			day = diff;
-		}
+	const lastMonthDay = determineLastDayOfMonth(year, month);
+	if (day > lastMonthDay) {
+		day = lastMonthDay;
 	}
 
 	return {
@@ -167,7 +154,6 @@ const subtractMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDat
 		millisecond: sDt.millisecond,
 	};
 };
-
 // &&&&&&& //subtraction
 
 // &&&&&&& addition
