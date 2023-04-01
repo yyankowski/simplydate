@@ -289,6 +289,7 @@ const simplyDateToStringByFormatMap = {
         `${pad(month)}/${pad(day)}/${year} ${pad(hour)}:${pad(minute)}:${pad(second)}`,
     ['DD/MM/YYYY HH:mm:ss']: ({ year, month, day, hour, minute, second }: SimplyDate) =>
         `${pad(day)}/${pad(month)}/${year} ${pad(hour)}:${pad(minute)}:${pad(second)}`,
+    ['MMM DD, YYYY']: ({ year, month, day }: SimplyDate) => `${Localization.MONTHS.MMM[month]} ${pad(day)}, ${pad(year)}`
 };
 
 const dateTimeStringFromPattern = {
