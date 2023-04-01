@@ -1,5 +1,5 @@
 # SimplyDate
-This is a basic functional, non-mutating date-time manipulation library implemented in Typescript. It does not support time zones and is suitable for simple and basic date formatting and manipulation. Please note that this library is a personal project and is not ready for production use. *Use it at your own risk*.
+This is a basic functional, non-mutating date-time manipulation library implemented in Typescript. It supports time zones and is suitable for simple and basic date formatting and manipulation. Please note that this library is a personal project and is not ready for production use. *Use it at your own risk*.
 
 Installation:
 
@@ -62,6 +62,16 @@ Output to string
 const simpleDate = Simply.from.date(new Date(`2017-03-01T03:24:00`));
 Simply.format(simpleDate).as("YYYY-MM-DDTHH:mm:ss") === "2017-03-01T03:24:00"
 Simply.format(simpleDate).as("YYYY-MM-DD") === "2017-03-01"
+```
+With timezones:
+```
+const options = {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            };
+Simply.format(sDt).as({ locale: "de-DE", options })) === "Mittwoch, 29. März 2017"          
 ```
 
 The following date formats are supported:
