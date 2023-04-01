@@ -1,7 +1,7 @@
 # SimplyDate
 This is a basic functional, non-mutating date-time manipulation library implemented in Typescript. It supports time zones and is suitable for simple and basic date formatting and manipulation. Please note that this library is a personal project and is not ready for production use. *Use it at your own risk*.
 
-##Installation:
+## Installation:
 
 NPM
 ```
@@ -13,7 +13,7 @@ Yarn
 yarn add simplydate
 ```
 
-##Usage Examples:
+## Usage Examples:
 
 ````
 import {Simply} from "simplydate"
