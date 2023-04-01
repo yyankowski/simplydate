@@ -259,19 +259,29 @@ const getYearByFormat = {
 const getLocMonth = (month: number, _format: string) => Localization.MONTHS[_format][month - 1];
 
 const simplyDateToStringByFormatMap = {
-	['YYYY-MM-DDTHH:mm']: ({ year, month, day, hour, minute }: SimplyDate) =>
-		`${year}-${pad(month)}-${pad(day)}T${pad(hour)}:${pad(minute)}`,
-	['YYYY-MM-DDTHH:mm:ss']: ({ year, month, day, hour, minute, second }: SimplyDate) =>
-		`${year}-${pad(month)}-${pad(day)}T${pad(hour)}:${pad(minute)}:${pad(second)}`,
-	['YYYY-MM-DDTHH:mm:ss.SSS']: ({ year, month, day, hour, minute, second, millisecond }: SimplyDate) =>
-		`${year}-${pad(month)}-${pad(day)}T${pad(hour)}:${pad(minute)}:${pad(second)}.${padMs(millisecond)}`,
-	['YYYY-MM-DD']: ({ year, month, day }) => `${year}-${pad(month)}-${pad(day)}`,
-	['HH:mm']: ({ hour, minute }: SimplyDate) => `${pad(hour)}:${pad(minute)}`,
-	['HH:mm:ss']: ({ hour, minute, second }: SimplyDate) => `${pad(hour)}:${pad(minute)}:${pad(second)}`,
-	['YY MMM DD h:mm A']: ({ year, month, day, hour, minute }: SimplyDate) => {
-		const amPm = hour > 12 ? 'PM' : 'AM';
-		return `${getYearByFormat.YY(year)} ${getLocMonth(month, 'MMM')} ${pad(day)} ${hour % 12}:${minute} ${amPm}`;
-	},
+  ['YYYY-MM-DDTHH:mm']: ({ year, month, day, hour, minute }: SimplyDate) =>
+    `${year}-${pad(month)}-${pad(day)}T${pad(hour)}:${pad(minute)}`,
+  ['YYYY-MM-DDTHH:mm:ss']: ({ year, month, day, hour, minute, second }: SimplyDate) =>
+    `${year}-${pad(month)}-${pad(day)}T${pad(hour)}:${pad(minute)}:${pad(second)}`,
+  ['YYYY-MM-DDTHH:mm:ss.SSS']: ({ year, month, day, hour, minute, second, millisecond }: SimplyDate) =>
+    `${year}-${pad(month)}-${pad(day)}T${pad(hour)}:${pad(minute)}:${pad(second)}.${padMs(millisecond)}`,
+  ['YYYY-MM-DD']: ({ year, month, day }) => `${year}-${pad(month)}-${pad(day)}`,
+  ['HH:mm']: ({ hour, minute }: SimplyDate) => `${pad(hour)}:${pad(minute)}`,
+  ['HH:mm:ss']: ({ hour, minute, second }: SimplyDate) => `${pad(hour)}:${pad(minute)}:${pad(second)}`,
+  ['YY MMM DD h:mm A']: ({ year, month, day, hour, minute }: SimplyDate) => {
+    const amPm = hour > 12 ? 'PM' : 'AM';
+    return `${getYearByFormat.YY(year)} ${getLocMonth(month, 'MMM')} ${pad(day)} ${hour % 12}:${minute} ${amPm}`;
+  },
+  ['MM/DD/YYYY']: ({ year, month, day }: SimplyDate) => `${pad(month)}/${pad(day)}/${year}`,
+  ['DD/MM/YYYY']: ({ year, month, day }: SimplyDate) => `${pad(day)}/${pad(month)}/${year}`,
+  ['MM/DD/YYYY HH:mm']: ({ year, month, day, hour, minute }: SimplyDate) =>
+    `${pad(month)}/${pad(day)}/${year} ${pad(hour)}:${pad(minute)}`,
+  ['DD/MM/YYYY HH:mm']: ({ year, month, day, hour, minute }: SimplyDate) =>
+    `${pad(day)}/${pad(month)}/${year} ${pad(hour)}:${pad(minute)}`,
+  ['MM/DD/YYYY HH:mm:ss']: ({ year, month, day, hour, minute, second }: SimplyDate) =>
+    `${pad(month)}/${pad(day)}/${year} ${pad(hour)}:${pad(minute)}:${pad(second)}`,
+  ['DD/MM/YYYY HH:mm:ss']: ({ year, month, day, hour, minute, second }: SimplyDate) =>
+    `${pad(day)}/${pad(month)}/${year} ${pad(hour)}:${pad(minute)}:${pad(second)}`,
 };
 
 const dateTimeStringFromPattern = {
