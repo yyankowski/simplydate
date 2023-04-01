@@ -83,6 +83,11 @@ describe('SimplyDate library unit-tests', () => {
 			sDt = Simply.from.string('2017-03-29T13:24:00');
 			expect(Simply.format(sDt).as('HH:mm:ss')).to.equal('13:24:00');
 		});
+		
+		it('2.8 format as MMM DD, YYYY', () => {
+			sDt = Simply.from.string('2017-03-29T13:24:00');
+			expect(Simply.format(sDt).as('MMM DD, YYYY')).to.equal('Mar 29, 2017');
+		});
 	});
 
 	describe('3.0 operations with Unix Epoch', () => {
