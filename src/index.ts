@@ -219,7 +219,7 @@ const addMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => 
 	}
 };
 
-const addDays = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate =>
+const addDays = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => value === 0?sDt:
 	addMilliseconds(value * 86400000)(sDt);
 
 const addMilliseconds = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
@@ -406,7 +406,7 @@ export namespace Simply {
     		from: subtractMonths(value),
     	},
     	days: {
-    		from: addDays(value === 0?value:-value),
+    		from: addDays(-value),
     	},
     	hours: {
     		from: addHours(-value),
