@@ -43,5 +43,9 @@ describe('days.spec.ts ', () => {
 			sDt = Simply.from.date(new Date('2017-01-28T03:24:00'));
 			expect(Simply.add(-3).days.to(sDt).day).to.equal(25);
 		});
+		
+		it('2.5 correctly add a zero value', () => {
+			expect(Simply.subtract(0).days.from(sDt).day).to.equal(28);
+		});
 	});
 });
