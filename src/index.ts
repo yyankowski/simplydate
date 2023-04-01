@@ -95,6 +95,7 @@ const determineLastDayOfMonth = (year: number, month: number): number => {
 // &&&&&&& subtraction
 
 const subtractYears = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
+	if(value === 0) return sDt;
 
 	let { day, month } = sDt;
 	const year = sDt.year - value;
@@ -125,6 +126,7 @@ const subtractYears = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate
  * @returns {(sDt: SimplyDate) => SimplyDate}
  */
 const subtractMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
+  if(value === 0) return sDt; 	
   const date = new Date(sDt.year, sDt.month - 1, sDt.day);
   date.setMonth(date.getMonth() - value);
   return Simply.from.date(date);
@@ -138,6 +140,8 @@ const subtractMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDat
  * @param value
  */
 const addYears = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
+	if(value === 0) return sDt;
+	
 	if (value < 0) {
 		return subtractYears(value)(sDt);
 	}
@@ -164,6 +168,8 @@ const addYears = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
 };
 
 const addMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
+	if(value === 0) return sDt;
+	
 	if (value < 0) {
 		return subtractMonths(-value)(sDt);
 	}
@@ -219,10 +225,11 @@ const addMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => 
 	}
 };
 
-const addDays = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => value === 0?sDt:
-	addMilliseconds(value * 86400000)(sDt);
+const addDays = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => addMilliseconds(value * 86400000)(sDt);
 
 const addMilliseconds = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
+	if(value === 0) return sDt;
+	
 	const curMs = new Date(sDt.year, sDt.month - 1, sDt.day, sDt.hour, sDt.minute, sDt.second, sDt.millisecond)
 		.getTime();
 
