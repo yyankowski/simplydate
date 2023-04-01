@@ -125,9 +125,9 @@ const subtractYears = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate
  * @returns {(sDt: SimplyDate) => SimplyDate}
  */
 const subtractMonths = (value: number) => (sDt: Readonly<SimplyDate>): SimplyDate => {
-      const newDate = new Date(sDt.getTime());
-      newDate.setUTCMonth(newDate.getUTCMonth() - value);
-      return Simply.from.date(newDate);
+  const date = new Date(sDt.year, sDt.month - 1, sDt.day);
+  date.setMonth(date.getMonth() - value);
+  return Simply.from.date(date);
 };
 
 // &&&&&&& //subtraction
