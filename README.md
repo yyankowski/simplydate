@@ -67,7 +67,7 @@ Simply.format(simpleDate).as("YYYY-MM-DDTHH:mm:ss") === "2017-03-01T03:24:00"
 Simply.format(simpleDate).as("YYYY-MM-DD") === "2017-03-01"
 ```
 
-Supported formats:
+The following date formats are supported:
 ```
 'YYYY-MM-DDTHH:mm:ss.SSS' => '2017-03-01T03:24:00.000'
 'YYYY-MM-DDTHH:mm:ss' => '2017-03-01T03:24:00'
@@ -78,7 +78,12 @@ Supported formats:
 'HH:mm:ss' => '13:24:00'
 
 'YY MMM DD h:mm A' => '17 Mar 29 3:24 AM'
-'YY MMM DD h:mm A' => '17 Mar 29 3:24 AM'
+'DD MMM YYYY' => '01 Mar 2017'
+'MMM DD, YYYY' => 'Mar 01, 2017'
+'MMM DD YYYY' => 'Mar 01 2017'
+'YYYY/MM/DD' => '2017/03/01'
+'DD/MM/YYYY' => '01/03/2017'
+'DD.MM.YYYY' => '01.03.2017'
 ```
 
 Get milliseconds since Unix Epoch till now.
