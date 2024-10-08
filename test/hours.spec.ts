@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { Simply, SimplyDate } from '../src';
 
 describe('hours.spec.ts ', () => {
@@ -10,22 +9,22 @@ describe('hours.spec.ts ', () => {
 		});
 
 		it('1.1 correctly subtract an hour', () => {
-			expect(Simply.subtract(3).hours.from(sDt).day).to.equal(1);
-			expect(Simply.subtract(3).hours.from(sDt).hour).to.equal(0);
+			expect(Simply.subtract(3).hours.from(sDt).day).toBe(1);
+			expect(Simply.subtract(3).hours.from(sDt).hour).toBe(0);
 		});
 
 		it('1.2 correctly subtract an hour', () => {
-			expect(Simply.subtract(4).hours.from(sDt).day).to.equal(28);
-			expect(Simply.subtract(4).hours.from(sDt).hour).to.equal(23);
+			expect(Simply.subtract(4).hours.from(sDt).day).toBe(28);
+			expect(Simply.subtract(4).hours.from(sDt).hour).toBe(23);
 		});
 
 		it('1.3 correctly subtract an hour', () => {
-			expect(Simply.subtract(24).hours.from(sDt).day).to.equal(28);
-			expect(Simply.subtract(24).hours.from(sDt).hour).to.equal(3);
+			expect(Simply.subtract(24).hours.from(sDt).day).toBe(28);
+			expect(Simply.subtract(24).hours.from(sDt).hour).toBe(3);
 		});
 
 		it('1.4 correctly subtract a negative value', () => {
-			expect(Simply.subtract(-2).hours.from(sDt).hour).to.equal(5);
+			expect(Simply.subtract(-2).hours.from(sDt).hour).toBe(5);
 		});
 	});
 
@@ -35,16 +34,16 @@ describe('hours.spec.ts ', () => {
 		});
 
 		it('2.1 correctly add hours', () => {
-			expect(Simply.add(3).hours.to(sDt).hour).to.equal(6);
+			expect(Simply.add(3).hours.to(sDt).hour).toBe(6);
 		});
 
 		it('2.2 correctly add negative hours', () => {
-			expect(Simply.add(-3).hours.to(sDt).hour).to.equal(0);
+			expect(Simply.add(-3).hours.to(sDt).hour).toBe(0);
 		});
 
 		it('2.3 correctly add hours and increment days', () => {
-			expect(Simply.add(21).hours.to(sDt).hour).to.equal(0);
-			expect(Simply.add(21).hours.to(sDt).day).to.equal(2);
+			expect(Simply.add(21).hours.to(sDt).hour).toBe(0);
+			expect(Simply.add(21).hours.to(sDt).day).toBe(2);
 		});
 	});
 });
