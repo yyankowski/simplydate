@@ -1,4 +1,5 @@
 // &&&& Localizations
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class Localization {
     static readonly MONTHS = {
         MMM: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -7,15 +8,15 @@ class Localization {
 
 // &&&& // Localizations
 
-export type SimplyDate = {
-    year: number,
-    month: number,
-    day: number,
-    hour: number,
-    minute: number,
-    second: number,
-    millisecond: number
-};
+export interface SimplyDate {
+    year: number;
+    month: number;
+    day: number;
+    hour: number;
+    minute: number;
+    second: number;
+    millisecond: number;
+}
 
 // &&&& utilities
 const isLeapYear = (year: number): boolean => {

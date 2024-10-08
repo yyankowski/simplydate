@@ -7,16 +7,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Cache Yarn packages
+
+      - name: Cache pnpm store
         uses: actions/cache@v2
         with:
-          path: ~/.cache/yarn
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-pnpm-
+
+      - name: Install pnpm
+        run: |
+          npm install -g pnpm
+          pnpm config set store-dir ~/.pnpm-store
+
       - name: Install dependencies
         run: |
-          yarn install
+          pnpm install
           if [ $? -eq 0 ]
           then
             echo "Install dependencies passed"
@@ -24,9 +31,10 @@ jobs:
             echo "Install dependencies failed"
             exit 1
           fi
+
       - name: Run tests
         run: |
-          yarn test
+          pnpm test
           if [ $? -eq 0 ]
           then
             echo "Tests passed"

@@ -4,8 +4,8 @@ test
 tmp
 .idea
 tsconfig.json
-.eslintrc.js
-.eslintignore
+eslint.config.js
+jestconfig.json
 simplydate.iml
 .cache
 .gitignore

@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { Simply, SimplyDate } from '../src';
 
 describe('minutes.spec.ts', () => {
@@ -10,12 +9,12 @@ describe('minutes.spec.ts', () => {
 		});
 
 		it('1.1 correctly subtract minutes', () => {
-			expect(Simply.subtract(24).minutes.from(sDt).hour).to.equal(3);
-			expect(Simply.subtract(24).minutes.from(sDt).minute).to.equal(0);
+			expect(Simply.subtract(24).minutes.from(sDt).hour).toBe(3);
+			expect(Simply.subtract(24).minutes.from(sDt).minute).toBe(0);
 		});
 
 		it('1.2 correctly subtract minutes', () => {
-			expect(Simply.subtract(25).minutes.from(sDt).minute).to.equal(59);
+			expect(Simply.subtract(25).minutes.from(sDt).minute).toBe(59);
 		});
 	});
 
@@ -25,12 +24,12 @@ describe('minutes.spec.ts', () => {
 		});
 
 		it('2.1 correctly add minutes', () => {
-			expect(Simply.add(24).minutes.to(sDt).hour).to.equal(3);
-			expect(Simply.add(36).minutes.to(sDt).minute).to.equal(0);
+			expect(Simply.add(24).minutes.to(sDt).hour).toBe(3);
+			expect(Simply.add(36).minutes.to(sDt).minute).toBe(0);
 		});
 
 		it('2.2 correctly add minutes', () => {
-			expect(Simply.add(36).minutes.to(sDt).hour).to.equal(4);
+			expect(Simply.add(36).minutes.to(sDt).hour).toBe(4);
 		});
 	});
 });
