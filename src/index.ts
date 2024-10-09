@@ -141,7 +141,7 @@ const addHours =
 
 const DATETIME_LOCAL = "YYYY-MM-DDTHH:mm";
 const pad = (num: number): string => (num < 10 ? `0${num}` : `${num}`);
-const padMs = (num): string => {
+const padMs = (num: number): string => {
   if (num < 10) {
     return `00${num}`;
   }
@@ -234,15 +234,21 @@ const dateTimeStringFromPattern = {
   },
 };
 
-const fromDate = (dt: Readonly<Date>): SimplyDate => ({
-  year: dt.getFullYear(),
-  month: dt.getMonth() + 1,
-  day: dt.getDate(),
-  hour: dt.getHours(),
-  minute: dt.getMinutes(),
-  second: dt.getSeconds(),
-  millisecond: dt.getMilliseconds(),
-});
+const fromDate = (dt: Readonly<Date>): SimplyDate => {
+  if (!dt) {
+    throw new Error("Date must be specified");
+  }
+
+  return {
+    year: dt.getFullYear(),
+    month: dt.getMonth() + 1,
+    day: dt.getDate(),
+    hour: dt.getHours(),
+    minute: dt.getMinutes(),
+    second: dt.getSeconds(),
+    millisecond: dt.getMilliseconds(),
+  };
+};
 
 /**
  * From Unix epoch
@@ -257,7 +263,13 @@ const fromMsSinceEpoch = (dt: number): SimplyDate => fromDate(new Date(dt));
  * @returns {SimplyDate}
  */
 const fromString = (dt: string, pattern?: string): SimplyDate => {
+  if (!dt || typeof pattern !== "string") {
+    throw new Error("Date string parameter not specified");
+  }
   if (pattern) {
+    if (!dateTimeStringFromPattern[pattern]) {
+      throw new Error(`Date pattern ${pattern} is not supported`);
+    }
     return dateTimeStringFromPattern[pattern](dt);
   }
   return fromDate(new Date(dt));
