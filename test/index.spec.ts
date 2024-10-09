@@ -107,6 +107,48 @@ describe("SimplyDate library unit-tests", () => {
         "Mittwoch, 29. März 2017",
       );
     });
+
+    it("2.9 format using Intl.DateTimeFormat to French date", () => {
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      } as const;
+
+      sDt = Simply.from.string("2017-03-29T13:24:00");
+      expect(Simply.format(sDt).as({ locale: "fr-FR", options })).toBe(
+        "mercredi 29 mars 2017",
+      );
+    });
+
+    it("2.10 format using Intl.DateTimeFormat to Spanish date", () => {
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      } as const;
+
+      sDt = Simply.from.string("2017-03-29T13:24:00");
+      expect(Simply.format(sDt).as({ locale: "es-ES", options })).toBe(
+        "miércoles, 29 de marzo de 2017",
+      );
+    });
+
+    it("2.11 format using Intl.DateTimeFormat to Japanese date", () => {
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      } as const;
+
+      sDt = Simply.from.string("2017-03-29T13:24:00");
+      expect(Simply.format(sDt).as({ locale: "ja-JP", options })).toBe(
+        "2017年3月29日水曜日",
+      );
+    });
   });
 
   describe("3.0 operations with Unix Epoch", () => {
@@ -114,6 +156,61 @@ describe("SimplyDate library unit-tests", () => {
       expect(
         Simply.to.msSinceEpoch(Simply.from.string("2017-03-29T13:24:11"), -120),
       ).toBe(1490786651000);
+    });
+  });
+
+  describe("4.0 simplyDateToStringByFormatMap should", () => {
+    beforeEach(() => {
+      sDt = Simply.from.date(new Date("2017-03-29T13:24:45.123"));
+    });
+
+    it("4.1 format using 'YYYY-MM-DD' pattern", () => {
+      expect(Simply.format(sDt).as("YYYY-MM-DD")).toBe("2017-03-29");
+    });
+
+    it("4.2 format using 'YYYY/MM/DD' pattern", () => {
+      expect(Simply.format(sDt).as("YYYY/MM/DD")).toBe("2017/03/29");
+    });
+
+    it("4.3 format using 'DD-MM-YYYY' pattern", () => {
+      expect(Simply.format(sDt).as("DD-MM-YYYY")).toBe("29-03-2017");
+    });
+
+    it("4.4 format using 'MM/DD/YYYY' pattern", () => {
+      expect(Simply.format(sDt).as("MM/DD/YYYY")).toBe("03/29/2017");
+    });
+
+    it("4.5 format using 'hh:mm A' pattern (12-hour format)", () => {
+      expect(Simply.format(sDt).as("hh:mm A")).toBe("01:24 PM");
+    });
+
+    it("4.6 format using 'HH:mm:ss' pattern (24-hour format)", () => {
+      expect(Simply.format(sDt).as("HH:mm:ss")).toBe("13:24:45");
+    });
+
+    it("4.7 format using 'hh:mm:ss.SSS A' pattern (with milliseconds)", () => {
+      expect(Simply.format(sDt).as("hh:mm:ss.SSS A")).toBe("01:24:45.123 PM");
+    });
+
+    it("4.8 format using 'dddd, MMMM Do YYYY' pattern", () => {
+      expect(Simply.format(sDt).as("dddd, MMMM Do YYYY")).toBe(
+        "Wednesday, March 29th 2017",
+      );
+    });
+
+    it("4.9 format using 'MMMM Do, YYYY [at] h:mm A' pattern", () => {
+      expect(Simply.format(sDt).as("MMMM Do, YYYY [at] h:mm A")).toBe(
+        "March 29th, 2017 at 1:24 PM",
+      );
+    });
+
+    it("4.10 format using 'YYYY-MM-DDTHH:mm:ss.SSSZ' pattern (ISO 8601)", () => {
+      const utcDate = new Date(Date.UTC(2017, 2, 29, 13, 24, 45, 123));
+      sDt = Simply.from.date(utcDate);
+
+      expect(Simply.format(sDt).as("YYYY-MM-DDTHH:mm:ss.SSSZ")).toBe(
+        "2017-03-29T13:24:45.123Z",
+      );
     });
   });
 });

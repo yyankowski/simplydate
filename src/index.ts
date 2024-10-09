@@ -16,6 +16,20 @@ class Localization {
       "Nov",
       "Dec",
     ],
+    MMMM: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
   };
 }
 
@@ -141,7 +155,7 @@ const addHours =
 
 const DATETIME_LOCAL = "YYYY-MM-DDTHH:mm";
 const pad = (num: number): string => (num < 10 ? `0${num}` : `${num}`);
-const padMs = (num): string => {
+const padMs = (num: number): string => {
   if (num < 10) {
     return `00${num}`;
   }
@@ -217,6 +231,85 @@ const simplyDateToStringByFormatMap = {
     `${pad(day)}/${pad(month)}/${year} ${pad(hour)}:${pad(minute)}:${pad(second)}`,
   ["MMM DD, YYYY"]: ({ year, month, day }: SimplyDate) =>
     `${Localization.MONTHS.MMM[month]} ${pad(day)}, ${pad(year)}`,
+  // Add support for full month names
+  "MMMM DD, YYYY": ({ year, month, day }: SimplyDate) =>
+    `${Localization.MONTHS.MMMM[month - 1]} ${pad(day)}, ${year}`,
+
+  // Shorter year formats with month and day
+  "MMM-YY": ({ year, month }: SimplyDate) =>
+    `${Localization.MONTHS.MMM[month - 1]} '${String(year).slice(2)}`,
+
+  // Adding week and day-of-year formats
+  "DDD YYYY": ({ year, month, day }: SimplyDate) => {
+    const start = new Date(year, 0, 0);
+    const diff = new Date(year, month - 1, day).getTime() - start.getTime();
+    const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+    return `${dayOfYear} ${year}`;
+  },
+
+  // 12-hour format with optional AM/PM
+  "hh:mm A": ({ hour, minute }: SimplyDate) => {
+    const amPm = hour >= 12 ? "PM" : "AM";
+    const hour12 = hour % 12 || 12;
+    return `${pad(hour12)}:${pad(minute)} ${amPm}`;
+  },
+
+  // Additional common formats
+  "YYYY-MM": ({ year, month }: SimplyDate) => `${year}-${pad(month)}`,
+  "YYYY/MM/DD": (date) => {
+    const year = date.year;
+    const month = pad(date.month);
+    const day = pad(date.day);
+    return `${year}/${month}/${day}`;
+  },
+  "DD-MM-YYYY": (date) => `${pad(date.day)}-${pad(date.month)}-${date.year}`,
+  "hh:mm:ss.SSS A": (date) => {
+    const hours12 = date.hour % 12 || 12; // Handle 0 as 12 for 12-hour format
+    const amPm = date.hour < 12 ? "AM" : "PM"; // Determine AM/PM
+    return `${pad(hours12)}:${pad(date.minute)}:${pad(date.second)}.${padMs(date.millisecond)} ${amPm}`;
+  },
+  ["dddd, MMMM Do YYYY"]: (date: SimplyDate) => {
+    const dt = Simply.to.date(date);
+    const dayOfWeek = dt.toLocaleDateString("en-US", { weekday: "long" });
+    const month = dt.toLocaleDateString("en-US", { month: "long" });
+    const day = date.day;
+
+    // Determine the ordinal suffix (e.g., "1st", "2nd")
+    const dayWithOrdinal = day + getOrdinal(day);
+
+    return `${dayOfWeek}, ${month} ${dayWithOrdinal} ${date.year}`;
+  },
+  ["MMMM Do, YYYY [at] h:mm A"]: (date: SimplyDate) => {
+    const month = Simply.to
+      .date(date)
+      .toLocaleDateString("en-US", { month: "long" });
+    const day = date.day;
+
+    // Determine the ordinal suffix (e.g., "1st", "2nd")
+    const dayWithOrdinal = day + getOrdinal(day);
+
+    const year = date.year;
+
+    // Convert hour to 12-hour format and determine AM/PM
+    const hours12 = date.hour % 12 || 12; // Handle 0 as 12 for 12-hour format
+    const ampm = date.hour >= 12 ? "PM" : "AM";
+
+    const minute = pad(date.minute);
+
+    return `${month} ${dayWithOrdinal}, ${year} at ${hours12}:${minute} ${ampm}`;
+  },
+  ["YYYY-MM-DDTHH:mm:ss.SSSZ"]: (dt: SimplyDate) => {
+    const date = Simply.to.date(dt);
+    const utcYear = date.getUTCFullYear();
+    const utcMonth = pad(date.getUTCMonth() + 1);
+    const utcDay = pad(date.getUTCDate());
+    const utcHour = pad(date.getUTCHours());
+    const utcMinute = pad(date.getUTCMinutes());
+    const utcSecond = pad(date.getUTCSeconds());
+    const utcMillisecond = padMs(date.getUTCMilliseconds());
+
+    return `${utcYear}-${utcMonth}-${utcDay}T${utcHour}:${utcMinute}:${utcSecond}.${utcMillisecond}Z`;
+  },
 };
 
 const dateTimeStringFromPattern = {
@@ -234,15 +327,21 @@ const dateTimeStringFromPattern = {
   },
 };
 
-const fromDate = (dt: Readonly<Date>): SimplyDate => ({
-  year: dt.getFullYear(),
-  month: dt.getMonth() + 1,
-  day: dt.getDate(),
-  hour: dt.getHours(),
-  minute: dt.getMinutes(),
-  second: dt.getSeconds(),
-  millisecond: dt.getMilliseconds(),
-});
+const fromDate = (dt: Readonly<Date>): SimplyDate => {
+  if (!dt) {
+    throw new Error("Date must be specified");
+  }
+
+  return {
+    year: dt.getFullYear(),
+    month: dt.getMonth() + 1,
+    day: dt.getDate(),
+    hour: dt.getHours(),
+    minute: dt.getMinutes(),
+    second: dt.getSeconds(),
+    millisecond: dt.getMilliseconds(),
+  };
+};
 
 /**
  * From Unix epoch
@@ -257,7 +356,13 @@ const fromMsSinceEpoch = (dt: number): SimplyDate => fromDate(new Date(dt));
  * @returns {SimplyDate}
  */
 const fromString = (dt: string, pattern?: string): SimplyDate => {
+  if (!dt) {
+    throw new Error("Date string parameter not specified");
+  }
   if (pattern) {
+    if (!dateTimeStringFromPattern[pattern]) {
+      throw new Error(`Date pattern ${pattern} is not supported`);
+    }
     return dateTimeStringFromPattern[pattern](dt);
   }
   return fromDate(new Date(dt));
@@ -406,6 +511,12 @@ const format = (sDt: Readonly<SimplyDate>) => ({
 const getTimeZoneOffsetMs = (): number => {
   return new Date().getTimezoneOffset();
 };
+
+function getOrdinal(day: number) {
+  const ordinal = ["th", "st", "nd", "rd"];
+  const v = day % 100;
+  return ordinal[(v - 20) % 10] || ordinal[v] || ordinal[0];
+}
 
 export const Simply = {
   now,
