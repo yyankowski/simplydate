@@ -1,6 +1,6 @@
 # SimplyDate
 
-This is a basic functional, non-mutating date-time manipulation library implemented in Typescript. It supports time zones and is suitable for simple and basic date formatting and manipulation. Please note that this library is a personal project and is not ready for production use. _Use it at your own risk_.
+This is a basic functional, non-mutating date-time manipulation library implemented in Typescript. It supports time zones and is suitable for simple and basic date formatting and manipulation.
 
 ## Installation:
 
