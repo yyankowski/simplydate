@@ -8,7 +8,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 20.x]
+        node-version: [17.x, 18.x, 20.x]
       fail-fast: false  # Continue testing other Node versions even if one fails
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.node-version }}
