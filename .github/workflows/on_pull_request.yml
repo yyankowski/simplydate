@@ -5,40 +5,33 @@ on: pull_request
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        node-version: [17.x, 18.x, 20.x]
+      fail-fast: false  # Continue testing other Node versions even if one fails
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.node-version }}
+      cancel-in-progress: true
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - name: Cache pnpm store
-        uses: actions/cache@v2
+      - uses: pnpm/action-setup@v2
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
+          version: 8
 
-      - name: Install pnpm
-        run: |
-          npm install -g pnpm
-          pnpm config set store-dir ~/.pnpm-store
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: |
-          pnpm install
-          if [ $? -eq 0 ]
-          then
-            echo "Install dependencies passed"
-          else
-            echo "Install dependencies failed"
-            exit 1
-          fi
+        run: pnpm install
+
+      - name: Lint code
+        run: pnpm lint
 
       - name: Run tests
-        run: |
-          pnpm test
-          if [ $? -eq 0 ]
-          then
-            echo "Tests passed"
-          else
-            echo "Tests failed"
-            exit 1
-          fi
+        run: pnpm test
